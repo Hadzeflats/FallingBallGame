@@ -26,7 +26,7 @@ public class GameplayScene implements Scene {
     public GameplayScene() {
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
-        playerPoint = new Point(Constants.SCREEN_WIDTH / 2,  Constants.SCREEN_HEIGHT / 4);
+        playerPoint = new Point(Constants.SCREEN_WIDTH / 2,  3*Constants.SCREEN_HEIGHT / 4);
         // updates the location of player to playerPoint
         player.update(playerPoint);
 
@@ -101,6 +101,7 @@ public class GameplayScene implements Scene {
 
             int elapsedTime = (int)(System.currentTimeMillis()-frameTime);
             frameTime = System.currentTimeMillis();
+
             if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
                 //movement y-direction (delta pitch)
                 float pitch = orientationData.getOrientation()[1]-orientationData.getStartOrientation()[1];
@@ -110,9 +111,8 @@ public class GameplayScene implements Scene {
                 float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/500f;
                 float ySpeed = pitch * Constants.SCREEN_HEIGHT/500f;
 
-               // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
+                // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
                 playerPoint.x += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
-               playerPoint.y += 2;
                 //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
             //Screen bounds, spring van ene kant naar andere kant op scherm
@@ -122,7 +122,7 @@ public class GameplayScene implements Scene {
                 playerPoint.x = 0;
 
             if(playerPoint.y < 0 )
-                playerPoint.y = 0;
+                gameOver = true;
             else if (playerPoint.y > Constants.SCREEN_HEIGHT)
                 playerPoint.y = Constants.SCREEN_HEIGHT;
 
@@ -130,24 +130,27 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             obstacleManager.update();
 
-            //if collision with obstacles -> gameover TODO (gameover) verander obstacle naar top scherm
+            //zwaartekracht of blijven liggen
             if (obstacleManager.playerCollide(player)) {
-                //playerPoint.y = obstacleManager.speed; else ... TODO snelheid blokje aan obstacle aanpassen
-                gameOver = true;
-                gameOverTime = System.currentTimeMillis();
+                playerPoint.y += (double) (obstacleManager.speed * obstacleManager.elapsedtime);
+                //TODO
             }
+            else
+                playerPoint.y += 10;
+
         }
     }
 
-        private void drawCenterText(Canvas canvas, Paint paint, String text) {
-            paint.setTextAlign(Paint.Align.LEFT);
-            canvas.getClipBounds(r);
-            int cHeight = r.height();
-            int cWidth = r.width();
-            paint.getTextBounds(text, 0, text.length(), r);
-            float x = cWidth / 2f - r.width() / 2f - r.left;
-            float y = cHeight / 2f + r.height() / 2f - r.bottom;
-            canvas.drawText(text, x, y, paint);
-        }
+
+    private void drawCenterText(Canvas canvas, Paint paint, String text) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(r);
+        int cHeight = r.height();
+        int cWidth = r.width();
+        paint.getTextBounds(text, 0, text.length(), r);
+        float x = cWidth / 2f - r.width() / 2f - r.left;
+        float y = cHeight / 2f + r.height() / 2f - r.bottom;
+        canvas.drawText(text, x, y, paint);
+    }
 }
 

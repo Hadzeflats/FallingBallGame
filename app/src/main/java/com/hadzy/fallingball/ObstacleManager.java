@@ -15,8 +15,10 @@ public class ObstacleManager {
     private int obstacleHeight;
     private int color;
 
-    private long startTime;
-    private long initTime;
+    public long startTime;
+    public long initTime;
+    public float speed;
+    public int elapsedtime;
 
     private int score = 0;
 
@@ -34,6 +36,12 @@ public class ObstacleManager {
 
     }
 
+    public float Speed (float Speed){
+        speed = Speed;
+        speed = (float) (Math.sqrt(1 + (startTime - initTime) / 20000.0)) * Constants.SCREEN_HEIGHT / (-7000.0f);
+        return speed;
+    }
+
 
     public boolean playerCollide(RectPlayer player) {
         for (Obstacle ob : obstacles) {
@@ -44,7 +52,6 @@ public class ObstacleManager {
     }
 
     private void populateObstacles() {
-        //TODO Make obstacles move upwards
         int currY = Constants.SCREEN_HEIGHT +5 * Constants.SCREEN_HEIGHT / 4;
         while (currY > Constants.SCREEN_HEIGHT)
         //while bottom of obstacle < 0 (hasn't gone onto the screen yet), keep generating obstacles. (currY <0) i.p.v. (obstacles.get(obstacles.size() - 1).getRectangle().bottom < 0, dit werkte niet)
@@ -61,12 +68,13 @@ public class ObstacleManager {
         if (startTime < Constants.INIT_TIME)
             startTime = Constants.INIT_TIME;
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);
+        elapsedtime = elapsedTime;
         startTime = System.currentTimeMillis();
         //It takes 5 seconds for 1 obstacle to move across the entire screen
         //(float)(Math.sqrt((startTime-initTime)/1000.0)): increases speed over time every 20 sec
         //TODO make speed dependent of score (if score has certain value, increase speed)
-        float speed = (float) (Math.sqrt(1 + (startTime - initTime) / 20000.0)) * Constants.SCREEN_HEIGHT / (-10000.0f);
         for (Obstacle ob : obstacles) {
+            Speed(speed);
             ob.incrementY(speed * elapsedTime);
         }
         //if last obstacle >= screen height, generate new obstacle (rectangle)
