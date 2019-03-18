@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.support.constraint.solver.widgets.Rectangle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import static com.hadzy.fallingball.SceneManager.ACTIVE_SCENE;
@@ -131,8 +133,33 @@ public class GameplayScene implements Scene {
             obstacleManager.update();
 
             //zwaartekracht of blijven liggen
+
             if (obstacleManager.playerCollide(player)) {
-                playerPoint.y += (double) (obstacleManager.speed * obstacleManager.elapsedtime);
+                for(int i=0; i<obstacleManager.getObstacles().size(); i++) {
+                    Rect rect1 = obstacleManager.getObstacles().get(i).getRectangle();
+                    Rect rect2 = obstacleManager.getObstacles().get(i).getRectangle2();
+                    Rect play = player.getRectangle();
+                    int Th = 35;
+
+                    if (Rect.intersects(rect1,play) || (Rect.intersects(rect2,play))){
+                        Log.d("yeet", "update: no rec");
+                        if (rect1.top+Th < play.bottom) {
+                            if ((play.right > rect2.left) || (play.left > rect1.right))
+                                playerPoint.x += 0;
+                        }
+                        /*if (rect1.bottom > play.top) {
+                            if ((play.right > rect2.left) || (play.left > rect1.right))
+                                playerPoint.x += 0;
+                        }*/
+                        else
+                            playerPoint.y = rect1.top - (play.height()/2);
+
+                    }
+
+                    /* if (obstacleManager.playerCollide(player)) {
+                    playerPoint.y += (double) (obstacleManager.speed * obstacleManager.elapsedtime);} */
+
+                }
                 //TODO
             }
             else

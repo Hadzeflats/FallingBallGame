@@ -10,8 +10,10 @@ public class Obstacle implements GameObject {
     private Rect rectangle2;
     private int color;
 
-    public Rect getRectangle() {
-        return rectangle;
+    public Rect getRectangle() { return rectangle; }
+
+    public Rect getRectangle2() {
+        return rectangle2;
     }
 
     public void incrementY (float y){

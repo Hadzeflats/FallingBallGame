@@ -20,6 +20,8 @@ public class ObstacleManager {
     public float speed;
     public int elapsedtime;
 
+    public ArrayList<Obstacle> getObstacles () {return obstacles;}
+
     private int score = 0;
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
