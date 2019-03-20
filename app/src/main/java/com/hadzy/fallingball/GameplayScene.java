@@ -97,6 +97,8 @@ public class GameplayScene implements Scene {
 
     @Override
     public void update() {
+        boolean TouchSide = false;
+
         if (!gameOver) {
             if (frameTime < Constants.INIT_TIME)
                 frameTime = Constants.INIT_TIME;
@@ -104,19 +106,6 @@ public class GameplayScene implements Scene {
             int elapsedTime = (int)(System.currentTimeMillis()-frameTime);
             frameTime = System.currentTimeMillis();
 
-            if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
-                //movement y-direction (delta pitch)
-                float pitch = orientationData.getOrientation()[1]-orientationData.getStartOrientation()[1];
-                //movement x-direction (delta roll)
-                float roll = orientationData.getOrientation()[2]-orientationData.getStartOrientation()[2];
-
-                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/500f;
-                float ySpeed = pitch * Constants.SCREEN_HEIGHT/500f;
-
-                // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
-                playerPoint.x += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
-                //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
-            }
             //Screen bounds, spring van ene kant naar andere kant op scherm
             if(playerPoint.x < 0 )
                 playerPoint.x = Constants.SCREEN_WIDTH;
@@ -135,6 +124,7 @@ public class GameplayScene implements Scene {
             //zwaartekracht of blijven liggen
 
             if (obstacleManager.playerCollide(player)) {
+
                 for(int i=0; i<obstacleManager.getObstacles().size(); i++) {
                     Rect rect1 = obstacleManager.getObstacles().get(i).getRectangle();
                     Rect rect2 = obstacleManager.getObstacles().get(i).getRectangle2();
@@ -143,16 +133,24 @@ public class GameplayScene implements Scene {
 
                     if (Rect.intersects(rect1,play) || (Rect.intersects(rect2,play))){
                         Log.d("yeet", "update: no rec");
+
                         if (rect1.top+Th < play.bottom) {
-                            if ((play.right > rect2.left) || (play.left > rect1.right))
-                                playerPoint.x += 0;
+
+                            if (play.left < rect1.right) {
+                                playerPoint.x = rect1.right + (play.width() / 2) - 2;
+                                TouchSide = true;
+                            }
+
+                            if (play.right > rect2.left) {
+                                playerPoint.x = rect2.left - (play.width() / 2) + 2;
+                                TouchSide = true;
+                            }
                         }
-                        /*if (rect1.bottom > play.top) {
-                            if ((play.right > rect2.left) || (play.left > rect1.right))
-                                playerPoint.x += 0;
-                        }*/
-                        else
-                            playerPoint.y = rect1.top - (play.height()/2);
+
+                        else {
+                            playerPoint.y = rect1.top - (play.height() / 2);
+                            TouchSide = false;
+                        }
 
                     }
 
@@ -164,6 +162,20 @@ public class GameplayScene implements Scene {
             }
             else
                 playerPoint.y += 10;
+
+            if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
+                //movement y-direction (delta pitch)
+                float pitch = orientationData.getOrientation()[1]-orientationData.getStartOrientation()[1];
+                //movement x-direction (delta roll)
+                float roll = orientationData.getOrientation()[2]-orientationData.getStartOrientation()[2];
+
+                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/500f;
+                float ySpeed = pitch * Constants.SCREEN_HEIGHT/500f;
+
+                // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
+                playerPoint.x += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
+                //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
+            }
 
         }
     }
