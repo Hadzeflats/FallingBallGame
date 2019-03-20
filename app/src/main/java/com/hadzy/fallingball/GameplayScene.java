@@ -121,47 +121,41 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             obstacleManager.update();
 
-            //zwaartekracht of blijven liggen
-
+            //collision (+y movement)
             if (obstacleManager.playerCollide(player)) {
 
                 for(int i=0; i<obstacleManager.getObstacles().size(); i++) {
                     Rect rect1 = obstacleManager.getObstacles().get(i).getRectangle();
                     Rect rect2 = obstacleManager.getObstacles().get(i).getRectangle2();
                     Rect play = player.getRectangle();
-                    int Th = 35;
+                    //threshold
+                    float Th = obstacleManager.accel*55;
 
                     if (Rect.intersects(rect1,play) || (Rect.intersects(rect2,play))){
-                        Log.d("yeet", "update: no rec");
+                        Log.d("yeet", "update: boi");
 
                         if (rect1.top+Th < play.bottom) {
-
+                            // collision left
                             if (play.left < rect1.right) {
                                 playerPoint.x = rect1.right + (play.width() / 2) - 2;
                                 TouchSide = true;
                             }
-
+                            //collision right
                             if (play.right > rect2.left) {
                                 playerPoint.x = rect2.left - (play.width() / 2) + 2;
                                 TouchSide = true;
                             }
                         }
-
+                        // collision top (sort of)
                         else {
                             playerPoint.y = rect1.top - (play.height() / 2);
                             TouchSide = false;
                         }
-
                     }
-
-                    /* if (obstacleManager.playerCollide(player)) {
-                    playerPoint.y += (double) (obstacleManager.speed * obstacleManager.elapsedtime);} */
-
                 }
-                //TODO
             }
             else
-                playerPoint.y += 10;
+                playerPoint.y += 18 * (obstacleManager.accel*7/10);
 
             if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
                 //movement y-direction (delta pitch)

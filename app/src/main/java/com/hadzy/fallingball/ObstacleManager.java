@@ -19,6 +19,7 @@ public class ObstacleManager {
     public long initTime;
     public float speed;
     public int elapsedtime;
+    public float accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
 
     public ArrayList<Obstacle> getObstacles () {return obstacles;}
 
@@ -40,7 +41,8 @@ public class ObstacleManager {
 
     public float Speed (float Speed){
         speed = Speed;
-        speed = (float) (Math.sqrt(1 + (startTime - initTime) / 20000.0)) * Constants.SCREEN_HEIGHT / (-4000.0f);
+        accel = (float) (Math.sqrt(1 + (startTime - initTime) / 15000.0));
+        speed = accel * Constants.SCREEN_HEIGHT / (-5000.0f);
         return speed;
     }
 
