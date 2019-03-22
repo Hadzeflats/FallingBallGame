@@ -47,12 +47,13 @@ public class ObstacleManager {
     }
 
 
-    public boolean playerCollide(RectPlayer player) {
+    public Rect playerCollide(RectPlayer player) {
         for (Obstacle ob : obstacles) {
-            if (ob.playerCollide(player))
-                return true;
+            Rect colRect = ob.playerCollide(player);
+            if (colRect != null)
+                return colRect;
         }
-        return false;
+        return null;
     }
 
     private void populateObstacles() {
