@@ -35,9 +35,9 @@ public class GameplayScene implements Scene {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
 
         //When below screen, show indicator
-        indicator = new RectPlayer(new Rect(20 , 20, 60, 100), Color.rgb(0, 100, 230));
+        indicator = new RectPlayer(new Rect(20, 20, 60, 100), Color.rgb(0, 100, 230));
         // if (belowScreen)
-        indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 80);
+        indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
 
@@ -170,18 +170,9 @@ public class GameplayScene implements Scene {
                 //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
             //When below screen, show indicator TODO
-            if (playerPoint.y > Constants.SCREEN_HEIGHT){
+            if (playerPoint.y > Constants.SCREEN_HEIGHT) {
                 belowScreen = true;
-            }
-            /*if (playerPoint.y > Constants.SCREEN_HEIGHT && colRect == null) {
-                playerPoint.y = (Constants.SCREEN_HEIGHT + playerPoint.y);
-                belowScreen = true;
-            } else if
-            (playerPoint.y > Constants.SCREEN_HEIGHT && colRect != null) {
-                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
-                belowScreen = true;
-            } else
-                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);*/
+            } else belowScreen = false;
         }
     }
 
