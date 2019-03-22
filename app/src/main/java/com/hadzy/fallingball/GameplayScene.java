@@ -166,6 +166,7 @@ public class GameplayScene implements Scene {
 
                 // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
                 playerPoint.x += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
+                indicatorPoint.x = playerPoint.x;
                 //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
             //When below screen, show indicator TODO
