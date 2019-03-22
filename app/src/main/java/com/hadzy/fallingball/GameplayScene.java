@@ -15,6 +15,11 @@ public class GameplayScene implements Scene {
     private RectPlayer player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
+
+    private RectPlayer indicator;
+    private Point indicatorPoint;
+    private boolean belowScreen = false;
+
     /*private int score = 0; */ //TODO score
     private boolean movingPlayer = false;
     private boolean gameOver = false;
@@ -28,8 +33,11 @@ public class GameplayScene implements Scene {
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
-        // updates the location of player to playerPoint
-        player.update(playerPoint);
+
+        //When below screen, show indicator
+        indicator = new RectPlayer(new Rect(20 , 20, 60, 100), Color.rgb(0, 100, 230));
+        // if (belowScreen)
+        indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 80);
 
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
 
@@ -41,6 +49,7 @@ public class GameplayScene implements Scene {
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
+        indicator.update(indicatorPoint);
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
@@ -86,6 +95,10 @@ public class GameplayScene implements Scene {
         player.draw(canvas);
         obstacleManager.draw(canvas);
 
+        if (belowScreen) {
+            indicator.draw(canvas);
+        }
+
         if (gameOver) {
             Paint paint = new Paint();
             paint.setTextSize(70);
@@ -113,12 +126,11 @@ public class GameplayScene implements Scene {
 
             if (playerPoint.y < 0)
                 gameOver = true;
-            else if (playerPoint.y > Constants.SCREEN_HEIGHT)
-                playerPoint.y = Constants.SCREEN_HEIGHT;
 
-
+            // updates the location of player to playerPoint
             player.update(playerPoint);
             obstacleManager.update();
+            indicator.update(indicatorPoint);
 
             //collision (+y movement)
             Rect colRect = obstacleManager.playerCollide(player);
@@ -156,6 +168,19 @@ public class GameplayScene implements Scene {
                 playerPoint.x += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
                 //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
+            //When below screen, show indicator TODO
+            if (playerPoint.y > Constants.SCREEN_HEIGHT){
+                belowScreen = true;
+            }
+            /*if (playerPoint.y > Constants.SCREEN_HEIGHT && colRect == null) {
+                playerPoint.y = (Constants.SCREEN_HEIGHT + playerPoint.y);
+                belowScreen = true;
+            } else if
+            (playerPoint.y > Constants.SCREEN_HEIGHT && colRect != null) {
+                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
+                belowScreen = true;
+            } else
+                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);*/
         }
     }
 
