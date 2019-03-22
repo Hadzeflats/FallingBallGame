@@ -142,9 +142,11 @@ public class GameplayScene implements Scene {
                 if (colRect.top + Th < play.bottom) {
                     if (colRect.left > 0) {
                         playerPoint.x = colRect.left - (play.width() / 2) + 2;
+                        playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
                         TouchSide = true;
                     } else {
                         playerPoint.x = colRect.right + (play.width() / 2) - 2;
+                        playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
                         TouchSide = true;
 
                     }
@@ -173,6 +175,10 @@ public class GameplayScene implements Scene {
             if (playerPoint.y > Constants.SCREEN_HEIGHT) {
                 belowScreen = true;
             } else belowScreen = false;
+
+            if (playerPoint.y > Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap()) {
+                playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
+            }
         }
     }
 
