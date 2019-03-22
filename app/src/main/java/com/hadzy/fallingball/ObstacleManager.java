@@ -44,7 +44,7 @@ public class ObstacleManager {
     public float Speed (float Speed){
         speed = Speed;
         accel = (float) (Math.sqrt(1 + (startTime - initTime) / 15000.0));
-        speed = accel * Constants.SCREEN_HEIGHT / (-25000.0f);
+        speed = accel * Constants.SCREEN_HEIGHT / (-5000.0f);
         return speed;
     }
 
