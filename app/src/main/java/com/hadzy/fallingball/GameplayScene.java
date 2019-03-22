@@ -110,6 +110,7 @@ public class GameplayScene implements Scene {
     @Override
     public void update() {
         boolean TouchSide = false;
+        boolean TouchTop = false;
 
         if (!gameOver) {
             if (frameTime < Constants.INIT_TIME)
@@ -142,19 +143,19 @@ public class GameplayScene implements Scene {
                 if (colRect.top + Th < play.bottom) {
                     if (colRect.left > 0) {
                         playerPoint.x = colRect.left - (play.width() / 2) + 2;
-                        playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
                         TouchSide = true;
                     } else {
                         playerPoint.x = colRect.right + (play.width() / 2) - 2;
-                        playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
                         TouchSide = true;
-
                     }
                 } else {
                     playerPoint.y = colRect.top - (play.height() / 2);
                     TouchSide = false;
+                    TouchTop = true;
                 }
-            } else
+            }
+
+            if (!TouchTop)
                 playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
 
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
@@ -171,11 +172,11 @@ public class GameplayScene implements Scene {
                 indicatorPoint.x = playerPoint.x;
                 //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
-            //When below screen, show indicator TODO
+            //When below screen, show indicator
             if (playerPoint.y > Constants.SCREEN_HEIGHT) {
                 belowScreen = true;
             } else belowScreen = false;
-
+            //playerPoint can't go beneath 2 obstacles. Preventing the player to fall beneath spawn point of obstacles.
             if (playerPoint.y > Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap()) {
                 playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
             }
