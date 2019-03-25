@@ -26,6 +26,7 @@ public class ObstacleManager {
     public ArrayList<Obstacle> getObstacles () {return obstacles;}
 
     private int score = 0;
+    public int getScore(){ return score;}
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
@@ -78,7 +79,7 @@ public class ObstacleManager {
         elapsedtime = elapsedTime;
         startTime = System.currentTimeMillis();
         //It takes 5 seconds for 1 obstacle to move across the entire screen
-        //(float)(Math.sqrt((startTime-initTime)/1000.0)): increases speed over time every 20 sec
+        //(float)(Math.sqrt((startTime-initTime)/1000.0)): increases speed over time every x seconds
         //TODO make speed dependent of score (if score has certain value, increase speed)
         for (Obstacle ob : obstacles) {
             Speed(speed);

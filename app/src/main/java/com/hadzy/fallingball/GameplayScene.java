@@ -20,7 +20,6 @@ public class GameplayScene implements Scene {
     private Point indicatorPoint;
     private boolean belowScreen = false;
 
-    /*private int score = 0; */ //TODO score
     private boolean movingPlayer = false;
     private boolean gameOver = false;
     private long gameOverTime;
@@ -28,11 +27,14 @@ public class GameplayScene implements Scene {
     private OrientationData orientationData;
     private long frameTime;
 
+    //TODO score
+   // private int score = obstacleManager.getScore();
+
 
     public GameplayScene() {
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
-        playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
+        playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
         //When below screen, show indicator
         indicator = new RectPlayer(new Rect(20, 20, 60, 100), Color.rgb(0, 100, 230));
@@ -47,7 +49,7 @@ public class GameplayScene implements Scene {
     }
 
     public void reset() {
-        playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
+        playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
         player.update(playerPoint);
         indicator.update(indicatorPoint);
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
@@ -89,9 +91,9 @@ public class GameplayScene implements Scene {
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.YELLOW);
         //TODO Change screen when hitting certain score
-        /*score++;
-        if (score == 20){
+       /* if (score == 2){
             canvas.drawColor(Color.GREEN);}*/
+
         player.draw(canvas);
         obstacleManager.draw(canvas);
 
