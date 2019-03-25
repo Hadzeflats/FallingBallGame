@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Falling Ball</string>
+    <string name="Yellow">BackgroundC</string>
 </resources>
