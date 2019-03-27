@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.fallingmaze2">
+    package="com.example.fallingBall">
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"> <!--Fixes the phone in portrait mode -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,27 +21,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChooseLevel"
-            android:parentActivityName=".ChoosePlayer"
+            android:name="com.example.fallingBall.ChooseLevel"
+            android:parentActivityName="com.example.fallingBall.ChoosePlayer"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Options"
-            android:parentActivityName=".MainActivity"
+            android:name="com.example.fallingBall.Options"
+            android:parentActivityName="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ChoosePlayer"
-            android:parentActivityName=".MainActivity"
+            android:name="com.example.fallingBall.ChoosePlayer"
+            android:parentActivityName="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".GameScreen"
-            android:parentActivityName=".MainActivity"
+            android:name="com.example.fallingBall.GameScreen"
+            android:parentActivityName="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".theGame.MainGame"
-            android:parentActivityName=".MainActivity"
+            android:name="com.example.fallingBall.theGame.MainGame"
+            android:parentActivityName="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".GameOverScreen"
+            android:name="com.example.fallingBall.GameOverScreen"
             android:screenOrientation="portrait"/>
     </application>
 
