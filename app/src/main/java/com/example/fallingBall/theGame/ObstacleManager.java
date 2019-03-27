@@ -7,6 +7,8 @@ import android.graphics.Rect;
 
 import java.util.ArrayList;
 
+import static com.example.fallingBall.theGame.MainThread.canvas;
+
 public class ObstacleManager {
     //higher index = lower on screen = higher y value
     private ArrayList<Obstacle> obstacles;
@@ -26,7 +28,9 @@ public class ObstacleManager {
     public ArrayList<Obstacle> getObstacles () {return obstacles;}
 
     private int score = 0;
-    public int getScore(){ return score;}
+    public int getScore(){
+        System.out.println(score);
+        return score; }
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
@@ -92,6 +96,7 @@ public class ObstacleManager {
             obstacles.remove(obstacles.size() - 1);
             score++;
         }
+
     }
 
     public void draw(Canvas canvas) {
@@ -103,7 +108,8 @@ public class ObstacleManager {
         paint.setColor(Color.MAGENTA);
         //+paint.descent()-paint.ascent(): gets distance between baseline of the screen and top of the text, helps get rid of corner cropping
         canvas.drawText("" + score, 50, 50 + paint.descent() - paint.ascent(), paint);
-
+       /* if (score >= 2){
+            canvas.drawColor(Color.GREEN);}*/
 
     }
 }
