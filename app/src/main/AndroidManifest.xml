@@ -11,8 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".GameOverScreen"></activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait"> <!--Fixes the phone in portrait mode -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,19 +22,27 @@
         </activity>
         <activity
             android:name=".ChooseLevel"
-            android:parentActivityName=".ChoosePlayer" />
+            android:parentActivityName=".ChoosePlayer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Options"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ChoosePlayer"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".GameScreen"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".theGame.MainGame"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GameOverScreen"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
