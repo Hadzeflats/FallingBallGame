@@ -1,9 +1,8 @@
-package com.hadzy.fallingball;
+package com.example.fallingBall.theGame;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.constraint.solver.widgets.Rectangle;
 
 public class Obstacle implements GameObject {
 

@@ -1,14 +1,12 @@
-package com.hadzy.fallingball;
+package com.example.fallingBall.theGame;
 
 import android.app.Activity;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainActivity extends Activity {
+public class MainGame extends Activity {
     //TODO Scherm aan staan terwijl gamen
     //https://stackoverflow.com/questions/1114270/android-screen-timeout voor meer info
     /*private static final int DELAY = 3000;

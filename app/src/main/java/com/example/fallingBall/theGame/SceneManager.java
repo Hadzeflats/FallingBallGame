@@ -1,4 +1,4 @@
-package com.hadzy.fallingball;
+package com.example.fallingBall.theGame;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -26,6 +26,7 @@ scenes.get(ACTIVE_SCENE).receiveTouch(event);
 
     public void draw(Canvas canvas) {
         scenes.get(ACTIVE_SCENE).draw(canvas);
+
     }
 }
 

@@ -1,4 +1,4 @@
-package com.hadzy.fallingball;
+package com.example.fallingBall.theGame;
 
 import android.content.Context;
 

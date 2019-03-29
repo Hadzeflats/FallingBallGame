@@ -1,4 +1,4 @@
-package com.hadzy.fallingball;
+package com.example.fallingBall.theGame;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,7 +7,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
-import static com.hadzy.fallingball.SceneManager.ACTIVE_SCENE;
+import static com.example.fallingBall.theGame.MainThread.canvas;
+import static com.example.fallingBall.theGame.SceneManager.ACTIVE_SCENE;
 
 public class GameplayScene implements Scene {
 
@@ -15,6 +16,8 @@ public class GameplayScene implements Scene {
     private RectPlayer player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
+    private RectPlayer background;
+   // private int score = obstacleManager.getScore();
 
     private RectPlayer indicator;
     private Point indicatorPoint;
@@ -27,11 +30,8 @@ public class GameplayScene implements Scene {
     private OrientationData orientationData;
     private long frameTime;
 
-    //TODO score
-   // private int score = obstacleManager.getScore();
-
-
     public GameplayScene() {
+        background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
@@ -56,6 +56,7 @@ public class GameplayScene implements Scene {
         // added just to be safe
         movingPlayer = false;
     }
+
 
     @Override
     public void terminate() {
@@ -91,7 +92,8 @@ public class GameplayScene implements Scene {
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.YELLOW);
         //TODO Change screen when hitting certain score
-       /* if (score == 2){
+
+      /* if (score == 2){
             canvas.drawColor(Color.GREEN);}*/
 
         player.draw(canvas);
@@ -100,6 +102,10 @@ public class GameplayScene implements Scene {
         if (belowScreen) {
             indicator.draw(canvas);
         }
+        //TODO
+        /*if (score == 2) {
+            background.draw(canvas);
+        }*/
 
         if (gameOver) {
             Paint paint = new Paint();
@@ -183,6 +189,14 @@ public class GameplayScene implements Scene {
                 playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
             }
         }
+        //TODO score
+
+        /*if (obstacleManager != null) {
+
+            if (score == 2) {
+                canvas.drawColor(Color.GREEN);
+            }
+        }*/
     }
 
 
