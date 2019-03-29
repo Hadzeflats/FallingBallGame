@@ -7,6 +7,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.example.fallingBall.client.Client;
+
 import static com.example.fallingBall.theGame.MainThread.canvas;
 import static com.example.fallingBall.theGame.SceneManager.ACTIVE_SCENE;
 
@@ -17,7 +19,7 @@ public class GameplayScene implements Scene {
     private Point playerPoint;
     private ObstacleManager obstacleManager;
     private RectPlayer background;
-   // private int score = obstacleManager.getScore();
+    // private int score = obstacleManager.getScore();
 
     private RectPlayer indicator;
     private Point indicatorPoint;
@@ -26,6 +28,10 @@ public class GameplayScene implements Scene {
     private boolean movingPlayer = false;
     private boolean gameOver = false;
     private long gameOverTime;
+
+    //multiplayer
+    private RectPlayer player2;
+    private final Point playerPoint2;
 
     private OrientationData orientationData;
     private long frameTime;
@@ -46,6 +52,11 @@ public class GameplayScene implements Scene {
         orientationData = new OrientationData();
         orientationData.register();
         frameTime = System.currentTimeMillis();
+
+        //multi
+        Client client = new Client(this);
+        player2 = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
+        playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
     }
 
     public void reset() {
@@ -99,6 +110,9 @@ public class GameplayScene implements Scene {
         player.draw(canvas);
         obstacleManager.draw(canvas);
 
+        //multi
+        player2.draw(canvas);
+
         if (belowScreen) {
             indicator.draw(canvas);
         }
@@ -138,6 +152,9 @@ public class GameplayScene implements Scene {
 
             // updates the location of player to playerPoint
             player.update(playerPoint);
+            //multi
+            player2.update(playerPoint2);
+            
             obstacleManager.update();
             indicator.update(indicatorPoint);
 
@@ -199,6 +216,16 @@ public class GameplayScene implements Scene {
         }*/
     }
 
+    public void setPlayerPoint2(int x, int y) {
+        synchronized (playerPoint2) {
+            playerPoint2.x = x;
+            playerPoint2.y = y;
+        }
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
 
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
@@ -210,5 +237,8 @@ public class GameplayScene implements Scene {
         float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
     }
-}
 
+    public Point getPlayerPoint(){
+        return playerPoint;
+    }
+}
