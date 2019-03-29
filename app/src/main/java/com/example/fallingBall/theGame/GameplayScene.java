@@ -154,7 +154,7 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             //multi
             player2.update(playerPoint2);
-            
+
             obstacleManager.update();
             indicator.update(indicatorPoint);
 
