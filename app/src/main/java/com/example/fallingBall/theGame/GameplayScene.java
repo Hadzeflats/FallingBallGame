@@ -28,6 +28,7 @@ public class GameplayScene implements Scene {
     private boolean movingPlayer = false;
     private boolean gameOver = false;
     private long gameOverTime;
+    private boolean paused = true;
 
     //multiplayer
     private RectPlayer player2;
@@ -35,6 +36,11 @@ public class GameplayScene implements Scene {
 
     private OrientationData orientationData;
     private long frameTime;
+
+    public boolean getPaused(){
+        System.out.println(paused);
+        return paused;
+    }
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
@@ -87,6 +93,16 @@ public class GameplayScene implements Scene {
                     gameOver = false;
                     //resets reference point for tilt controls
                     orientationData.newGame();
+                    break;
+                }
+                if (paused){
+                    paused = false;
+                    break;
+                }
+
+                if (!paused){
+                    paused = true;
+                    break;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -127,6 +143,13 @@ public class GameplayScene implements Scene {
             paint.setColor(Color.MAGENTA);
             drawCenterText(canvas, paint, "Touch to replay");
         }
+
+        if(paused){
+            Paint paint = new Paint();
+            paint.setTextSize(70);
+            paint.setColor(Color.MAGENTA);
+            drawCenterText(canvas, paint, "Touch to resume");
+        }
     }
 
     @Override
@@ -134,7 +157,7 @@ public class GameplayScene implements Scene {
         boolean TouchSide = false;
         boolean TouchTop = false;
 
-        if (!gameOver) {
+        if (!gameOver && !paused) {
             if (frameTime < Constants.INIT_TIME)
                 frameTime = Constants.INIT_TIME;
 
@@ -182,7 +205,8 @@ public class GameplayScene implements Scene {
 
             if (!TouchTop)
                 playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
-
+            
+            //TODO orientationData also on pause when paused
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
                 //movement y-direction (delta pitch)
                 float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];

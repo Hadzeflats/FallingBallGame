@@ -75,6 +75,11 @@ public class ObstacleManager {
         }
     }
 
+    public long StartTime() {
+        startTime = System.currentTimeMillis();
+        return startTime;
+    }
+
     public void update() {
         //restarts start time whenever you get back on the app.
         if (startTime < Constants.INIT_TIME)
