@@ -134,11 +134,10 @@ public class GameplayScene implements Scene {
 
     @Override
     public void update() {
-        boolean paused = true;
         boolean TouchSide = false;
         boolean TouchTop = false;
 
-        if (!gameOver && !paused) {
+        if (!gameOver) {
             if (frameTime < Constants.INIT_TIME)
                 frameTime = Constants.INIT_TIME;
 
