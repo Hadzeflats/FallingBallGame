@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ObstacleManager {
     //higher index = lower on screen = higher y value
@@ -20,6 +21,7 @@ public class ObstacleManager {
     public float speed;
     public int elapsedtime;
     public float accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
+
 
     public int getObstacleGap(){return obstacleGap;}
 
@@ -49,6 +51,12 @@ public class ObstacleManager {
         return speed;
     }
 
+    public Random generator = new Random();
+    double randomGenerator() {
+        return generator.nextDouble();
+    }
+
+
 
     public Rect playerCollide(RectPlayer player) {
         for (Obstacle ob : obstacles) {
@@ -65,7 +73,7 @@ public class ObstacleManager {
         //while bottom of obstacle < 0 (hasn't gone onto the screen yet), keep generating obstacles. (currY <0) i.p.v. (obstacles.get(obstacles.size() - 1).getRectangle().bottom < 0, dit werkte niet)
         {
             // (-playerGap): if not, could generate gap off-screen
-            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+            int xStart = (int) randomGenerator() * (Constants.SCREEN_WIDTH - playerGap);
             obstacles.add(new Obstacle(obstacleHeight, color, xStart, currY, playerGap));
             currY -= obstacleHeight + obstacleGap;
         }

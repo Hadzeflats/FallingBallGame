@@ -7,6 +7,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.hadzy.fallingball.client.Client;
+
 import static com.hadzy.fallingball.SceneManager.ACTIVE_SCENE;
 
 public class GameplayScene implements Scene {
@@ -27,8 +29,12 @@ public class GameplayScene implements Scene {
     private OrientationData orientationData;
     private long frameTime;
 
+    //multiplayer
+    private RectPlayer player2;
+    private final Point playerPoint2;
+
     //TODO score
-   // private int score = obstacleManager.getScore();
+    // private int score = obstacleManager.getScore();
 
 
     public GameplayScene() {
@@ -46,10 +52,21 @@ public class GameplayScene implements Scene {
         orientationData = new OrientationData();
         orientationData.register();
         frameTime = System.currentTimeMillis();
+
+
+
+        //multi
+        Client client = new Client(this);
+        player2 = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(0, 0, 255));
+        playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
+
+
     }
 
     public void reset() {
-        playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
+//        playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
+        playerPoint.x = Constants.SCREEN_WIDTH / 2;
+        playerPoint.y = Constants.SCREEN_HEIGHT / 3;
         player.update(playerPoint);
         indicator.update(indicatorPoint);
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
@@ -97,6 +114,12 @@ public class GameplayScene implements Scene {
         player.draw(canvas);
         obstacleManager.draw(canvas);
 
+
+        //multi
+        player2.update(playerPoint2);
+        player2.draw(canvas);
+
+
         if (belowScreen) {
             indicator.draw(canvas);
         }
@@ -111,10 +134,11 @@ public class GameplayScene implements Scene {
 
     @Override
     public void update() {
+        boolean paused = true;
         boolean TouchSide = false;
         boolean TouchTop = false;
 
-        if (!gameOver) {
+        if (!gameOver && !paused) {
             if (frameTime < Constants.INIT_TIME)
                 frameTime = Constants.INIT_TIME;
 
@@ -185,6 +209,17 @@ public class GameplayScene implements Scene {
         }
     }
 
+    public void setPlayerPoint2(int x, int y){
+        synchronized (playerPoint2) {
+            playerPoint2.x = x;
+            playerPoint2.y = y;
+        }
+    }
+
+    public boolean isGameOver(){
+        return gameOver;
+    }
+
 
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
@@ -195,6 +230,10 @@ public class GameplayScene implements Scene {
         float x = cWidth / 2f - r.width() / 2f - r.left;
         float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
+    }
+
+    public Point getPlayerPoint(){
+        return playerPoint;
     }
 }
 
