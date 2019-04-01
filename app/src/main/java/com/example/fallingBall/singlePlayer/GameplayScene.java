@@ -64,6 +64,9 @@ public class GameplayScene implements Scene {
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
+        paused = true;
+
+
     }
 
 
@@ -80,6 +83,15 @@ public class GameplayScene implements Scene {
                     movingPlayer = true;
 
                 //when tapping screen, if game over and time after game over >= 1 sec, start again
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!gameOver && movingPlayer)
+                    playerPoint.set((int) event.getX(), (int) event.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                movingPlayer = false;
+
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 1000) {
                     reset();
                     gameOver = false;
@@ -96,13 +108,6 @@ public class GameplayScene implements Scene {
                     paused = true;
                     break;
                 }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!gameOver && movingPlayer)
-                    playerPoint.set((int) event.getX(), (int) event.getY());
-                break;
-            case MotionEvent.ACTION_UP:
-                movingPlayer = false;
                 break;
         }
     }
