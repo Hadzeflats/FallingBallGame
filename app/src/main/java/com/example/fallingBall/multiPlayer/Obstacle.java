@@ -1,4 +1,4 @@
-package com.example.fallingBall.theGame;
+package com.example.fallingBall.multiPlayer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -27,7 +27,7 @@ public class Obstacle implements GameObject {
         this.color = color;
         //left,top,right,bottom
         rectangle = new Rect(0,startY,startX,startY +rectHeight);
-        rectangle2 =new Rect(startX+playerGap, startY,Constants.SCREEN_WIDTH,startY+rectHeight);
+        rectangle2 =new Rect(startX+playerGap, startY, Constants.SCREEN_WIDTH,startY+rectHeight);
     }
 
     public Rect playerCollide(RectPlayer player) {

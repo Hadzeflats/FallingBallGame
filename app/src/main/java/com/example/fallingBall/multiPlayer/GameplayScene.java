@@ -1,4 +1,4 @@
-package com.example.fallingBall.theGame;
+package com.example.fallingBall.multiPlayer;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,9 +8,9 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.example.fallingBall.client.Client;
+import com.example.fallingBall.client.DataReceiver;
 
-import static com.example.fallingBall.theGame.MainThread.canvas;
-import static com.example.fallingBall.theGame.SceneManager.ACTIVE_SCENE;
+import static com.example.fallingBall.singlePlayer.SceneManager.ACTIVE_SCENE;
 
 public class GameplayScene implements Scene {
 
@@ -32,9 +32,11 @@ public class GameplayScene implements Scene {
 
     //multiplayer
     private RectPlayer player2;
-    private final Point playerPoint2;
+    private Point playerPoint2;
+    public boolean multiGame;
 
     private OrientationData orientationData;
+    private DataReceiver dataReceiver;
     private long frameTime;
 
     public boolean getPaused(){
@@ -61,13 +63,15 @@ public class GameplayScene implements Scene {
 
         //multi
         Client client = new Client(this);
-        player2 = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
-        playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
+        player2 = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(0, 100, 230));
+        playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT+100);
     }
 
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
         player.update(playerPoint);
+        playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT+100);
+        player2.update(playerPoint2);
         indicator.update(indicatorPoint);
         obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
         // added just to be safe
@@ -115,6 +119,7 @@ public class GameplayScene implements Scene {
         }
     }
 
+
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.YELLOW);
@@ -156,6 +161,7 @@ public class GameplayScene implements Scene {
     public void update() {
         boolean TouchSide = false;
         boolean TouchTop = false;
+        MultiGameStart ();
 
         if (!gameOver && !paused) {
             if (frameTime < Constants.INIT_TIME)
@@ -205,7 +211,7 @@ public class GameplayScene implements Scene {
 
             if (!TouchTop)
                 playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
-            
+
             //TODO orientationData also on pause when paused
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
                 //movement y-direction (delta pitch)
@@ -230,6 +236,9 @@ public class GameplayScene implements Scene {
                 playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
             }
         }
+        else
+            obstacleManager.StartTime();
+
         //TODO score
 
         /*if (obstacleManager != null) {
@@ -247,7 +256,17 @@ public class GameplayScene implements Scene {
         }
     }
 
+    public boolean MultiGameStart (){
+        if (playerPoint2.y != Constants.SCREEN_HEIGHT+100 && !multiGame) {
+            multiGame = true;
+            paused = false;
+        }
+            return multiGame;
+    }
+
+
     public boolean isGameOver() {
+        multiGame = false;
         return gameOver;
     }
 

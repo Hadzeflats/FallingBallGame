@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.fallingBall.multiPlayer.MultiGame;
+
 public class ChoosePlayer extends AppCompatActivity {
 
     public Button button2;
@@ -27,7 +29,7 @@ public class ChoosePlayer extends AppCompatActivity {
              button3.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     Intent bb = new Intent(ChoosePlayer.this, ChooseLevel.class);
+                     Intent bb = new Intent(ChoosePlayer.this, MultiGame.class);
                      startActivity(bb);
                  }
              });

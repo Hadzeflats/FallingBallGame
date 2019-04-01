@@ -1,4 +1,4 @@
-package com.example.fallingBall.theGame;
+package com.example.fallingBall.multiPlayer;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,8 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import java.util.ArrayList;
-
-import static com.example.fallingBall.theGame.MainThread.canvas;
 
 public class ObstacleManager {
     //higher index = lower on screen = higher y value
@@ -86,7 +84,7 @@ public class ObstacleManager {
             startTime = Constants.INIT_TIME;
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);
         elapsedtime = elapsedTime;
-        startTime = System.currentTimeMillis();
+        startTime = StartTime();
         //It takes 5 seconds for 1 obstacle to move across the entire screen
         //(float)(Math.sqrt((startTime-initTime)/1000.0)): increases speed over time every x seconds
         //TODO make speed dependent of score (if score has certain value, increase speed)

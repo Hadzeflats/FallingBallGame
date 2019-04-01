@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 
-import com.example.fallingBall.theGame.MainGame;
+import com.example.fallingBall.singlePlayer.SingleGame;
 
 public class ChooseLevel extends AppCompatActivity {
 
@@ -22,7 +22,7 @@ public class ChooseLevel extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(ChooseLevel.this, MainGame.class);
+                Intent b = new Intent(ChooseLevel.this, SingleGame.class);
                 startActivity(b);
 
             }
@@ -32,7 +32,7 @@ public class ChooseLevel extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bb = new Intent(ChooseLevel.this, MainGame.class);
+                Intent bb = new Intent(ChooseLevel.this, SingleGame.class);
                 startActivity(bb);
             }
         });
@@ -41,7 +41,7 @@ public class ChooseLevel extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(ChooseLevel.this, MainGame.class);
+                Intent b = new Intent(ChooseLevel.this, SingleGame.class);
                 startActivity(b);
 
             }
@@ -51,7 +51,7 @@ public class ChooseLevel extends AppCompatActivity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bb = new Intent(ChooseLevel.this, MainGame.class);
+                Intent bb = new Intent(ChooseLevel.this, SingleGame.class);
                 startActivity(bb);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.fallingBall.theGame;
+package com.example.fallingBall.multiPlayer;
 
 import android.content.Context;
 import android.graphics.Canvas;

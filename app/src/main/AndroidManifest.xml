@@ -44,7 +44,11 @@
             android:parentActivityName="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.example.fallingBall.theGame.MainGame"
+            android:name="com.example.fallingBall.singlePlayer.SingleGame"
+            android:parentActivityName="com.example.fallingBall.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.example.fallingBall.multiPlayer.MultiGame"
             android:parentActivityName="com.example.fallingBall.MainActivity"
             android:screenOrientation="portrait"/>
         <activity

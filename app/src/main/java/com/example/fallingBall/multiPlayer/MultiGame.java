@@ -1,4 +1,4 @@
-package com.example.fallingBall.theGame;
+package com.example.fallingBall.multiPlayer;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainGame extends Activity {
+public class MultiGame extends Activity {
     //TODO Scherm aan staan terwijl gamen
     //https://stackoverflow.com/questions/1114270/android-screen-timeout voor meer info
     /*private static final int DELAY = 3000;
@@ -23,7 +23,7 @@ public class MainGame extends Activity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
 
-        setContentView(new GamePanel (this));
+        setContentView(new GamePanel(this));
         /*defTimeOut = Settings.System.getInt(getContentResolver(),
                 Settings.System.SCREEN_OFF_TIMEOUT, DELAY);
         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, DELAY);*/
