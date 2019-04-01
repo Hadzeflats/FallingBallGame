@@ -17,7 +17,7 @@ class DataSender extends Thread {
         try {
             while (true) {
                 if (!client.isGameOver()) {
-                    Thread.sleep(200);
+                    Thread.sleep(40);
                     System.out.println(client.getPlayer().x + "," + client.getPlayer().y);
                     out.println("#" + client.getPlayer().x + "," + client.getPlayer().y);
                 }
