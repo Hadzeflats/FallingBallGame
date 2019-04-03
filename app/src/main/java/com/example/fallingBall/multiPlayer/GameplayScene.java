@@ -159,12 +159,20 @@ public class GameplayScene implements Scene {
             drawCenterText(canvas, paint, "Touch to replay");
         }
 
-        if (paused) {
+
+        if (paused /*&& System.currentTimeMillis()<100*/){
+            Paint paint = new Paint();
+            paint.setTextSize(70);
+            paint.setColor(Color.MAGENTA);
+            drawCenterText(canvas, paint, "Waiting for player 2");
+        }
+        
+       /* else if (paused && System.currentTimeMillis()>=100) {
             Paint paint = new Paint();
             paint.setTextSize(70);
             paint.setColor(Color.MAGENTA);
             drawCenterText(canvas, paint, "Touch to resume");
-        }
+        }*/
     }
 
     @Override
