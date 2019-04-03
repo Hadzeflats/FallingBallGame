@@ -41,7 +41,7 @@ public class GameplayScene implements Scene {
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
-        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
+        player = new RectPlayer(new Rect(Constants.SCREEN_HEIGHT/50, Constants.SCREEN_HEIGHT/50, Constants.SCREEN_HEIGHT/15, Constants.SCREEN_HEIGHT/15), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
@@ -61,7 +61,7 @@ public class GameplayScene implements Scene {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
         player.update(playerPoint);
         indicator.update(indicatorPoint);
-        obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
+        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT/10, Constants.SCREEN_HEIGHT/7, Constants.SCREEN_HEIGHT/30, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
         paused = true;
@@ -223,9 +223,10 @@ public class GameplayScene implements Scene {
                 playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
             }
         }
-        else
+        else {
             obstacleManager.StartTime();
-
+            frameTime = System.currentTimeMillis();
+        }
         //TODO score
 
         /*if (obstacleManager != null) {
