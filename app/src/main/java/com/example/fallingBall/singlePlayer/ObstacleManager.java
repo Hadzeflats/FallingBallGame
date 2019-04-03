@@ -21,14 +21,20 @@ public class ObstacleManager {
     public int elapsedtime;
     public float accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
 
-    public int getObstacleGap(){return obstacleGap;}
+    public int getObstacleGap() {
+        return obstacleGap;
+    }
 
-    public ArrayList<Obstacle> getObstacles () {return obstacles;}
+    public ArrayList<Obstacle> getObstacles() {
+        return obstacles;
+    }
 
     private int score = 0;
-    public int getScore(){
+
+    public int getScore() {
         System.out.println(score);
-        return score; }
+        return score;
+    }
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
@@ -44,10 +50,10 @@ public class ObstacleManager {
 
     }
 
-    public float Speed (float Speed){
+    public float Speed(float Speed) {
         speed = Speed;
-        accel = (float) (Math.sqrt(1 + (startTime - initTime) / ((float) Constants.SCREEN_HEIGHT*7)));
-        speed = accel * Constants.SCREEN_HEIGHT / ((float) -Constants.SCREEN_HEIGHT*2);
+        accel = (float) (Math.sqrt(1 + (startTime - initTime) / ((float) Constants.SCREEN_HEIGHT * 7)));
+        speed = accel * Constants.SCREEN_HEIGHT / ((float) -Constants.SCREEN_HEIGHT * 2);
         return speed;
     }
 
@@ -62,7 +68,7 @@ public class ObstacleManager {
     }
 
     private void populateObstacles() {
-        int currY = Constants.SCREEN_HEIGHT +5 * Constants.SCREEN_HEIGHT / 4;
+        int currY = Constants.SCREEN_HEIGHT + 5 * Constants.SCREEN_HEIGHT / 4;
         while (currY > Constants.SCREEN_HEIGHT)
         //while bottom of obstacle < 0 (hasn't gone onto the screen yet), keep generating obstacles. (currY <0) i.p.v. (obstacles.get(obstacles.size() - 1).getRectangle().bottom < 0, dit werkte niet)
         {
@@ -111,8 +117,5 @@ public class ObstacleManager {
         paint.setColor(Color.MAGENTA);
         //+paint.descent()-paint.ascent(): gets distance between baseline of the screen and top of the text, helps get rid of corner cropping
         canvas.drawText("" + score, 50, 50 + paint.descent() - paint.ascent(), paint);
-       /* if (score >= 2){
-            canvas.drawColor(Color.GREEN);}*/
-
     }
 }

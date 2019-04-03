@@ -38,9 +38,7 @@ public class Obstacle implements GameObject {
         if(Rect.intersects(rectangle2,player.getRectangle())) {
             return rectangle2;
         }
-
             return null;
-
     }
 
     @Override

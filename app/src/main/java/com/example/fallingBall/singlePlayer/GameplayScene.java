@@ -34,23 +34,23 @@ public class GameplayScene implements Scene {
     private DataReceiver dataReceiver;
     private long frameTime;
 
-    public boolean getPaused(){
+    public boolean getPaused() {
         System.out.println(paused);
         return paused;
     }
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
-        player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/25, Constants.SCREEN_HEIGHT/25), Color.rgb(230, 0, 100));
+        player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 25, Constants.SCREEN_HEIGHT / 25), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
         //When below screen, show indicator
-        indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/50,Constants.SCREEN_HEIGHT/50), Color.rgb(230, 0, 100));
+        indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(230, 0, 100));
         // if (belowScreen)
         indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
-        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT/10, Constants.SCREEN_HEIGHT/7, Constants.SCREEN_HEIGHT/30, Color.BLACK);
+        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
 
         orientationData = new OrientationData();
         orientationData.register();
@@ -61,7 +61,7 @@ public class GameplayScene implements Scene {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
         player.update(playerPoint);
         indicator.update(indicatorPoint);
-        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT/10, Constants.SCREEN_HEIGHT/7, Constants.SCREEN_HEIGHT/30, Color.BLACK);
+        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
         paused = true;
@@ -99,12 +99,12 @@ public class GameplayScene implements Scene {
                     orientationData.newGame();
                     break;
                 }
-                if (paused){
+                if (paused) {
                     paused = false;
                     break;
                 }
 
-                if (!paused){
+                if (!paused) {
                     paused = true;
                     break;
                 }
@@ -120,6 +120,9 @@ public class GameplayScene implements Scene {
 
       /* if (score == 2){
             canvas.drawColor(Color.GREEN);}*/
+      /*if (score == 2) {
+            background.draw(canvas);
+        }*/
 
         player.draw(canvas);
         obstacleManager.draw(canvas);
@@ -127,10 +130,7 @@ public class GameplayScene implements Scene {
         if (belowScreen) {
             indicator.draw(canvas);
         }
-        //TODO
-        /*if (score == 2) {
-            background.draw(canvas);
-        }*/
+
 
         if (gameOver) {
             Paint paint = new Paint();
@@ -139,7 +139,7 @@ public class GameplayScene implements Scene {
             drawCenterText(canvas, paint, "Touch to replay");
         }
 
-        if(paused){
+        if (paused) {
             Paint paint = new Paint();
             paint.setTextSize(70);
             paint.setColor(Color.MAGENTA);
@@ -198,8 +198,7 @@ public class GameplayScene implements Scene {
 
             if (!TouchTop)
                 playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
-            
-            //TODO orientationData also on pause when paused
+
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
                 //movement y-direction (delta pitch)
                 float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
@@ -222,19 +221,10 @@ public class GameplayScene implements Scene {
             if (playerPoint.y > Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap()) {
                 playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
             }
-        }
-        else {
+        } else {
             obstacleManager.StartTime();
             frameTime = System.currentTimeMillis();
         }
-        //TODO score
-
-        /*if (obstacleManager != null) {
-
-            if (score == 2) {
-                canvas.drawColor(Color.GREEN);
-            }
-        }*/
     }
 
 
@@ -253,7 +243,7 @@ public class GameplayScene implements Scene {
         canvas.drawText(text, x, y, paint);
     }
 
-    public Point getPlayerPoint(){
+    public Point getPlayerPoint() {
         return playerPoint;
     }
 }
