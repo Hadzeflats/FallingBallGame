@@ -205,7 +205,9 @@ public class GameplayScene implements Scene {
                 //movement x-direction (delta roll)
                 float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
 
-                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 500f;
+                //adjust xSpeed for sensitivity of tilt controls
+                //TODO add sensitivity option
+                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 700f;
                 float ySpeed = pitch * Constants.SCREEN_HEIGHT / 500f;
 
                 // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
