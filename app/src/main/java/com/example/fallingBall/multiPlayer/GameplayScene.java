@@ -33,7 +33,10 @@ public class GameplayScene implements Scene {
     //multiplayer
     private RectPlayer player2;
     private Point playerPoint2;
+    private RectPlayer indicator2;
+    private Point indicatorPoint2;
     public boolean multiGame;
+    private boolean belowScreen2 = false;
 
     private OrientationData orientationData;
     private DataReceiver dataReceiver;
@@ -46,16 +49,19 @@ public class GameplayScene implements Scene {
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
-        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(230, 0, 100));
+        player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/25, Constants.SCREEN_HEIGHT/25), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
         //When below screen, show indicator
-        indicator = new RectPlayer(new Rect(20, 20, 60, 100), Color.rgb(0, 100, 230));
+        indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/50,Constants.SCREEN_HEIGHT/50), Color.rgb(230, 0, 100));
         // if (belowScreen)
         indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
-        obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
+        indicator2 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/50,Constants.SCREEN_HEIGHT/50), Color.rgb(0, 100, 230));
+        indicatorPoint2 = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
+
+        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT/10, Constants.SCREEN_HEIGHT/7, Constants.SCREEN_HEIGHT/30, Color.BLACK);
 
         orientationData = new OrientationData();
         orientationData.register();
@@ -63,7 +69,7 @@ public class GameplayScene implements Scene {
 
         //multi
         Client client = new Client(this);
-        player2 = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(0, 100, 230));
+        player2 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/25, Constants.SCREEN_HEIGHT/25), Color.rgb(0, 100, 230));
         playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT+100);
     }
 
@@ -73,7 +79,9 @@ public class GameplayScene implements Scene {
         playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT+100);
         player2.update(playerPoint2);
         indicator.update(indicatorPoint);
-        obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
+        indicator2.update(indicatorPoint2);
+
+        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT/10, Constants.SCREEN_HEIGHT/7, Constants.SCREEN_HEIGHT/30, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
     }
@@ -134,9 +142,12 @@ public class GameplayScene implements Scene {
         //multi
         player2.draw(canvas);
 
-        if (belowScreen) {
+        if (belowScreen)
             indicator.draw(canvas);
-        }
+
+        if (belowScreen2)
+            indicator2.draw(canvas);
+
         //TODO
         /*if (score == 2) {
             background.draw(canvas);
@@ -186,6 +197,7 @@ public class GameplayScene implements Scene {
 
             obstacleManager.update();
             indicator.update(indicatorPoint);
+            indicator2.update(indicatorPoint2);
 
             //collision (+y movement)
             Rect colRect = obstacleManager.playerCollide(player);
@@ -210,7 +222,7 @@ public class GameplayScene implements Scene {
             }
 
             if (!TouchTop)
-                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
+                playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
 
             //TODO orientationData also on pause when paused
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
@@ -225,12 +237,16 @@ public class GameplayScene implements Scene {
                 // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
                 playerPoint.x += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
                 indicatorPoint.x = playerPoint.x;
+                indicatorPoint2.x = playerPoint2.x;
                 //playerPoint.y -=Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
             //When below screen, show indicator
             if (playerPoint.y > Constants.SCREEN_HEIGHT) {
                 belowScreen = true;
             } else belowScreen = false;
+            if (playerPoint2.y > Constants.SCREEN_HEIGHT) {
+                belowScreen2 = true;
+            } else belowScreen2 = false;
             //playerPoint can't go beneath 2 obstacles. Preventing the player to fall beneath spawn point of obstacles.
             if (playerPoint.y > Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap()) {
                 playerPoint.y = (Constants.SCREEN_HEIGHT + 2 * obstacleManager.getObstacleGap());
