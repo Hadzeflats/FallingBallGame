@@ -41,16 +41,16 @@ public class GameplayScene implements Scene {
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
-        player = new RectPlayer(new Rect(Constants.SCREEN_HEIGHT/50, Constants.SCREEN_HEIGHT/50, Constants.SCREEN_HEIGHT/15, Constants.SCREEN_HEIGHT/15), Color.rgb(230, 0, 100));
+        player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/25, Constants.SCREEN_HEIGHT/25), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
         //When below screen, show indicator
-        indicator = new RectPlayer(new Rect(20, 20, 60, 100), Color.rgb(0, 100, 230));
+        indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT/50,Constants.SCREEN_HEIGHT/50), Color.rgb(230, 0, 100));
         // if (belowScreen)
         indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
-        obstacleManager = new ObstacleManager(200, 350, 70, Color.BLACK);
+        obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT/10, Constants.SCREEN_HEIGHT/7, Constants.SCREEN_HEIGHT/30, Color.BLACK);
 
         orientationData = new OrientationData();
         orientationData.register();
@@ -197,7 +197,7 @@ public class GameplayScene implements Scene {
             }
 
             if (!TouchTop)
-                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
+                playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
             
             //TODO orientationData also on pause when paused
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
