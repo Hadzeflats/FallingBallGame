@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
-import com.example.fallingBall.client.Client;
 import com.example.fallingBall.client.DataReceiver;
 
 import static com.example.fallingBall.singlePlayer.SceneManager.ACTIVE_SCENE;
@@ -25,25 +24,31 @@ public class GameplayScene implements Scene {
     private Point indicatorPoint;
     private boolean belowScreen = false;
 
+    private RectPlayer pauseLine1;
+    private RectPlayer pauseLine2;
+    private Point pausePoint1;
+    private Point pausePoint2;
+
+
     private boolean movingPlayer = false;
     private boolean gameOver = false;
     private long gameOverTime;
-    private boolean paused = true;
+    private boolean paused = false;
 
     private OrientationData orientationData;
-    private DataReceiver dataReceiver;
     private long frameTime;
 
-    public boolean getPaused() {
-        System.out.println(paused);
-        return paused;
-    }
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
         player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 25, Constants.SCREEN_HEIGHT / 25), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
+
+        pauseLine1 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 120, Constants.SCREEN_HEIGHT / 26), Color.MAGENTA);
+        pauseLine2 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 120, Constants.SCREEN_HEIGHT / 26), Color.MAGENTA);
+        pausePoint1 = new Point((Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 10 - 25), Constants.SCREEN_WIDTH / 9);
+        pausePoint2 = new Point((Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 10 + 25), Constants.SCREEN_WIDTH / 9);
 
         //When below screen, show indicator
         indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(230, 0, 100));
@@ -77,6 +82,9 @@ public class GameplayScene implements Scene {
 
     @Override
     public void receiveTouch(MotionEvent event) {
+        float mx = event.getX();
+        float my = event.getY();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (!gameOver && player.getRectangle().contains((int) event.getX(), (int) event.getY()))
@@ -99,14 +107,18 @@ public class GameplayScene implements Scene {
                     orientationData.newGame();
                     break;
                 }
+
                 if (paused) {
                     paused = false;
                     break;
                 }
-
-                if (!paused) {
-                    paused = true;
-                    break;
+                //TODO MotionEvent waarden niet helemaal gelijk aan de zichtbare pauze knop, werkt goed genoeg
+                if (!paused && mx >= (Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 12) - ((Constants.SCREEN_HEIGHT / 18) / 2)
+                        && mx <= (Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 12) + ((Constants.SCREEN_HEIGHT / 18) / 2)) {
+                    if (my >= Constants.SCREEN_WIDTH / 12 - ((Constants.SCREEN_HEIGHT / 18) / 2) && my <= Constants.SCREEN_WIDTH / 12 + ((Constants.SCREEN_HEIGHT / 18) / 2)) {
+                        paused = true;
+                        break;
+                    }
                 }
                 break;
         }
@@ -117,7 +129,6 @@ public class GameplayScene implements Scene {
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.YELLOW);
         //TODO Change screen when hitting certain score
-
       /* if (score == 2){
             canvas.drawColor(Color.GREEN);}*/
       /*if (score == 2) {
@@ -126,6 +137,8 @@ public class GameplayScene implements Scene {
 
         player.draw(canvas);
         obstacleManager.draw(canvas);
+        pauseLine1.draw(canvas);
+        pauseLine2.draw(canvas);
 
         if (belowScreen) {
             indicator.draw(canvas);
@@ -173,6 +186,8 @@ public class GameplayScene implements Scene {
 
             obstacleManager.update();
             indicator.update(indicatorPoint);
+            pauseLine1.update(pausePoint1);
+            pauseLine2.update(pausePoint2);
 
             //collision (+y movement)
             Rect colRect = obstacleManager.playerCollide(player);
@@ -229,11 +244,6 @@ public class GameplayScene implements Scene {
         }
     }
 
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
@@ -243,9 +253,5 @@ public class GameplayScene implements Scene {
         float x = cWidth / 2f - r.width() / 2f - r.left;
         float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
-    }
-
-    public Point getPlayerPoint() {
-        return playerPoint;
     }
 }
