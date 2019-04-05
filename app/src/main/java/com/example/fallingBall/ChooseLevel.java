@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.example.fallingBall.singlePlayer.Constants;
+import com.example.fallingBall.singlePlayer.GameplayScene;
 import com.example.fallingBall.singlePlayer.SingleGame;
 
 public class ChooseLevel extends AppCompatActivity {
@@ -24,7 +26,6 @@ public class ChooseLevel extends AppCompatActivity {
             public void onClick(View v) {
                 Intent b = new Intent(ChooseLevel.this, SingleGame.class);
                 startActivity(b);
-
             }
         });
 
