@@ -21,6 +21,10 @@ class DataSender extends Thread {
                     System.out.println(client.getPlayer().x + "," + client.getPlayer().y);
                     out.println("#" + client.getPlayer().x + "," + client.getPlayer().y);
                 }
+                else {
+                    out.println("@ded");
+                    Thread.sleep(2000);
+                }
             }
         } catch (Exception e) {
 
