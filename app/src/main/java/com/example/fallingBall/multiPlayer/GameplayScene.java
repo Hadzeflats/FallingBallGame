@@ -84,6 +84,7 @@ public class GameplayScene implements Scene {
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
+        Client client = new Client(this);
     }
 
 
@@ -105,15 +106,6 @@ public class GameplayScene implements Scene {
                     gameOver = false;
                     //resets reference point for tilt controls
                     orientationData.newGame();
-                    break;
-                }
-                if (paused) {
-                    paused = false;
-                    break;
-                }
-
-                if (!paused) {
-                    paused = true;
                     break;
                 }
                 break;
@@ -179,7 +171,7 @@ public class GameplayScene implements Scene {
     public void update() {
         boolean TouchSide = false;
         boolean TouchTop = false;
-        MultiGameStart();
+//        MultiGameStart();
 
         if (!gameOver && !paused) {
             if (frameTime < Constants.INIT_TIME)
@@ -268,14 +260,14 @@ public class GameplayScene implements Scene {
         }
     }
 
-    public boolean MultiGameStart() {
-        if (playerPoint2.y != Constants.SCREEN_HEIGHT + 100 && !multiGame) {
-            multiGame = true;
-            paused = false;
-        }
-        return multiGame;
+    public void youWon(){
+        gameOver = true;
+        System.out.println("you won!");
     }
 
+    public void startNewGame(){
+        paused = false;
+    }
 
     public boolean isGameOver() {
         multiGame = false;

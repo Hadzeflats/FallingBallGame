@@ -21,7 +21,7 @@ public class Client extends Thread {
     public void run() {
         try {
             System.out.println("Connecting");
-            clientSocket = new Socket("145.94.223.156", 8069);
+            clientSocket = new Socket("145.94.220.132", 8069);
             DataSender dataService = new DataSender(this);
             DataReceiver dataReciever = new DataReceiver(this);
 
@@ -32,6 +32,14 @@ public class Client extends Thread {
 
     public void updatePlayerPoint(int x, int y, int playerID){
         gameplayScene.setPlayerPoint2(x, y);
+    }
+
+    public void playerDied(){
+        gameplayScene.youWon();
+    }
+
+    public void startGame(){
+        gameplayScene.startNewGame();
     }
 
     public Point getPlayer(){
