@@ -27,6 +27,8 @@ public class GameplayScene implements Scene {
 
     private boolean movingPlayer = false;
     private boolean gameOver = false;
+    private boolean gameWin = false;
+    private boolean gameLose = false;
     private long gameOverTime;
     private boolean paused = true;
 
@@ -35,17 +37,11 @@ public class GameplayScene implements Scene {
     private Point playerPoint2;
     private RectPlayer indicator2;
     private Point indicatorPoint2;
-    public boolean multiGame;
     private boolean belowScreen2 = false;
 
     private OrientationData orientationData;
     private DataReceiver dataReceiver;
     private long frameTime;
-
-    public boolean getPaused() {
-        System.out.println(paused);
-        return paused;
-    }
 
     public GameplayScene() {
         background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
@@ -82,8 +78,10 @@ public class GameplayScene implements Scene {
         indicator2.update(indicatorPoint2);
 
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
-        // added just to be safe
         movingPlayer = false;
+        paused = true;
+        gameLose = false;
+        gameWin = false;
         Client client = new Client(this);
     }
 
@@ -144,11 +142,18 @@ public class GameplayScene implements Scene {
             indicator2.draw(canvas);
 
 
-        if (gameOver) {
+        if (gameLose) {
             Paint paint = new Paint();
             paint.setTextSize(70);
             paint.setColor(Color.MAGENTA);
-            drawCenterText(canvas, paint, "Touch to replay");
+            drawCenterText(canvas, paint, "You lost :(");
+        }
+
+        if (gameWin) {
+            Paint paint = new Paint();
+            paint.setTextSize(70);
+            paint.setColor(Color.MAGENTA);
+            drawCenterText(canvas, paint, "You win :)");
         }
 
 
@@ -186,8 +191,10 @@ public class GameplayScene implements Scene {
             else if (playerPoint.x > Constants.SCREEN_WIDTH)
                 playerPoint.x = 0;
 
-            if (playerPoint.y < 0)
+            if (playerPoint.y < 0) {
                 gameOver = true;
+                gameLose = true;
+            }
 
             // updates the location of player to playerPoint
             player.update(playerPoint);
@@ -261,8 +268,9 @@ public class GameplayScene implements Scene {
     }
 
     public void youWon(){
+        gameWin = true;
         gameOver = true;
-        System.out.println("you won!");
+        // TODO you always win: only if someone wins this happens (so server problem probably)
     }
 
     public void startNewGame(){
@@ -270,7 +278,6 @@ public class GameplayScene implements Scene {
     }
 
     public boolean isGameOver() {
-        multiGame = false;
         return gameOver;
     }
 
