@@ -1,5 +1,7 @@
 package com.example.fallingBall.client;
 
+import com.example.fallingBall.multiPlayer.Constants;
+
 import java.io.PrintWriter;
 
 class DataSender extends Thread {
@@ -18,8 +20,8 @@ class DataSender extends Thread {
             while (true) {
                 if (!client.isGameOver()) {
                     Thread.sleep(25);
-                    System.out.println(client.getPlayer().x + "," + client.getPlayer().y);
-                    out.println("#" + client.getPlayer().x + "," + client.getPlayer().y);
+//                    System.out.println(((double) client.getPlayer().x / (double) Constants.SCREEN_WIDTH) + "," + ((double)client.getPlayer().x / (double)Constants.SCREEN_HEIGHT));
+                    out.println("#" + ((double) client.getPlayer().x / (double) Constants.SCREEN_WIDTH) + "," + ((double)client.getPlayer().y / (double)Constants.SCREEN_HEIGHT));
                 }
                 else {
                     out.println("@ded");
