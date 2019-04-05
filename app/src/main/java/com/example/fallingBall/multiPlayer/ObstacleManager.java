@@ -52,8 +52,9 @@ public class ObstacleManager {
 
     public float Speed(float Speed) {
         speed = Speed;
-        accel = (float) (Math.sqrt(1 + (startTime - initTime) / ((float) 20000)));
-        speed = ((accel * - Constants.SCREEN_HEIGHT) / 5000);
+        //TODO speed not accurate enough
+        accel = (float)((double) (Math.sqrt(1 + (startTime - initTime) / ((double) 20000))));
+        speed = (float)(((double) accel * - (double) Constants.SCREEN_HEIGHT) / 5000);
         return speed;
     }
 
