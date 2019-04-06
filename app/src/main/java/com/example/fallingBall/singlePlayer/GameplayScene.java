@@ -28,7 +28,9 @@ public class GameplayScene implements Scene {
     private RectPlayer pauseLine2;
     private Point pausePoint1;
     private Point pausePoint2;
-
+    private RectPlayer pauseScreen;
+    private RectPlayer pauseScreenOutline;
+    private Point pauseScreenPoint;
 
     private boolean movingPlayer = false;
     private boolean gameOver = false;
@@ -40,19 +42,24 @@ public class GameplayScene implements Scene {
 
 
     public GameplayScene() {
-        background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
+        /*background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));*/
         player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 25, Constants.SCREEN_HEIGHT / 25), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
+        //pause button
         pauseLine1 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 120, Constants.SCREEN_HEIGHT / 26), Color.MAGENTA);
         pauseLine2 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 120, Constants.SCREEN_HEIGHT / 26), Color.MAGENTA);
         pausePoint1 = new Point((Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 10 - 25), Constants.SCREEN_WIDTH / 9);
         pausePoint2 = new Point((Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 10 + 25), Constants.SCREEN_WIDTH / 9);
 
-        //When below screen, show indicator
+        //pause screen
+        pauseScreenPoint = new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT/2);
+        pauseScreen = new RectPlayer(new Rect(0,0,Constants.SCREEN_WIDTH*2/3,Constants.SCREEN_WIDTH/2),Color.YELLOW);
+        pauseScreenOutline = new RectPlayer(new Rect(0,0,Constants.SCREEN_WIDTH*2/3+15,Constants.SCREEN_WIDTH/2+15),Color.BLACK);
+
+        //When below screen, show indicator, if (belowScreen)
         indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(230, 0, 100));
-        // if (belowScreen)
         indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
@@ -69,9 +76,7 @@ public class GameplayScene implements Scene {
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
         // added just to be safe
         movingPlayer = false;
-        paused = true;
-
-
+        paused = false;
     }
 
 
@@ -117,6 +122,7 @@ public class GameplayScene implements Scene {
                         && mx <= (Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 12) + ((Constants.SCREEN_HEIGHT / 18) / 2)) {
                     if (my >= Constants.SCREEN_WIDTH / 12 - ((Constants.SCREEN_HEIGHT / 18) / 2) && my <= Constants.SCREEN_WIDTH / 12 + ((Constants.SCREEN_HEIGHT / 18) / 2)) {
                         paused = true;
+
                         break;
                     }
                 }
@@ -144,7 +150,6 @@ public class GameplayScene implements Scene {
             indicator.draw(canvas);
         }
 
-
         if (gameOver) {
             Paint paint = new Paint();
             paint.setTextSize(70);
@@ -153,6 +158,8 @@ public class GameplayScene implements Scene {
         }
 
         if (paused) {
+            pauseScreenOutline.draw(canvas);
+            pauseScreen.draw(canvas);
             Paint paint = new Paint();
             paint.setTextSize(70);
             paint.setColor(Color.MAGENTA);
@@ -188,6 +195,8 @@ public class GameplayScene implements Scene {
             indicator.update(indicatorPoint);
             pauseLine1.update(pausePoint1);
             pauseLine2.update(pausePoint2);
+
+
 
             //collision (+y movement)
             Rect colRect = obstacleManager.playerCollide(player);
@@ -241,6 +250,8 @@ public class GameplayScene implements Scene {
         } else {
             obstacleManager.StartTime();
             frameTime = System.currentTimeMillis();
+            pauseScreen.update(pauseScreenPoint);
+            pauseScreenOutline.update(pauseScreenPoint);
         }
     }
 
