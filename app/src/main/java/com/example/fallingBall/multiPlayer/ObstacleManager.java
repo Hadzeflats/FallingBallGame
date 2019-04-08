@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ObstacleManager {
     //higher index = lower on screen = higher y value
@@ -17,9 +18,11 @@ public class ObstacleManager {
 
     public long startTime;
     public long initTime;
-    public float speed;
+    public double speed;
     public int elapsedtime;
-    public float accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
+    public double accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
+    int seed = 5;
+    Random generator = new Random(seed);
 
     public int getObstacleGap() {
         return obstacleGap;
@@ -36,6 +39,30 @@ public class ObstacleManager {
         return score;
     }
 
+    public double random() {
+        int seed=5;
+        Random generator = new Random(seed);
+            double number = generator.nextDouble();
+            return number;
+    }
+
+/*    public void random() {
+        int seed=5;
+        Random generator = new Random(seed);
+
+        for (int i=0; i<100; i++){
+            int number = generator.nextInt(100);
+            System.out.println(number);
+        }
+
+        generator.setSeed(seed);
+
+        for (int i=0; i<100; i++) {
+            double number = (double) generator.nextInt(100)/100;
+            System.out.println(number);
+        }
+    }*/
+
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
@@ -50,11 +77,11 @@ public class ObstacleManager {
 
     }
 
-    public float Speed(float Speed) {
+    public double Speed(double Speed) {
         speed = Speed;
         //TODO speed not accurate enough
-        accel = (float)((double) (Math.sqrt(1 + (startTime - initTime) / ((double) 20000))));
-        speed = (float)(((double) accel * - (double) Constants.SCREEN_HEIGHT) / 5000);
+        accel =(Math.sqrt(1 + (startTime - initTime) / 20000.0));
+        speed = (accel * - (double) Constants.SCREEN_HEIGHT) / 5000.0;
         return speed;
     }
 
@@ -74,7 +101,8 @@ public class ObstacleManager {
         //while bottom of obstacle < 0 (hasn't gone onto the screen yet), keep generating obstacles. (currY <0) i.p.v. (obstacles.get(obstacles.size() - 1).getRectangle().bottom < 0, dit werkte niet)
         {
             // (-playerGap): if not, could generate gap off-screen
-            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+//            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+            int xStart = (int) (generator.nextDouble() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(new Obstacle(obstacleHeight, color, xStart, currY, playerGap));
             currY -= obstacleHeight + obstacleGap;
         }
@@ -101,7 +129,7 @@ public class ObstacleManager {
         }
         //if last obstacle >= screen height, generate new obstacle (rectangle)
         if (obstacles.get(obstacles.size() - 1).getRectangle().bottom <= 0) {
-            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+            int xStart = (int) (generator.nextDouble() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(0, new Obstacle(obstacleHeight, color, xStart, obstacles.get(0).getRectangle().bottom + obstacleHeight + obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
             score++;
