@@ -194,6 +194,7 @@ public class GameplayScene implements Scene {
             if (playerPoint.y < 0) {
                 gameOver = true;
                 gameLose = true;
+                gameWin = false;
             }
 
             // updates the location of player to playerPoint
@@ -209,7 +210,7 @@ public class GameplayScene implements Scene {
             Rect colRect = obstacleManager.playerCollide(player);
             if (colRect != null) {
 
-                float Th = obstacleManager.accel * 55;
+                double Th = obstacleManager.accel * 55;
                 Rect play = player.getRectangle();
 
                 if (colRect.top + Th < play.bottom) {
@@ -268,9 +269,12 @@ public class GameplayScene implements Scene {
     }
 
     public void youWon(){
+        if (!gameLose){
         gameWin = true;
+        gameLose = false;
         gameOver = true;
         // TODO you always win: only if someone wins this happens (so server problem probably)
+    }
     }
 
     public void startNewGame(){
