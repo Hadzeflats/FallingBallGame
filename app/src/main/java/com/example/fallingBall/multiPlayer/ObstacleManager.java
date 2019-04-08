@@ -21,8 +21,7 @@ public class ObstacleManager {
     public double speed;
     public int elapsedtime;
     public double accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
-    int seed = 5;
-    Random generator = new Random(seed);
+    int Seed;
 
     public int getObstacleGap() {
         return obstacleGap;
@@ -38,6 +37,11 @@ public class ObstacleManager {
         System.out.println(score);
         return score;
     }
+
+    public void getSeed (int seed) {
+        Seed = seed;
+    }
+    Random generator = new Random(Seed);
 
     public double random() {
         int seed=5;

@@ -40,6 +40,12 @@ public class DataReceiver extends Thread {
                     client.playerDied();
                     return;
                 }
+                if (inputLine.startsWith("$")) {
+                    inputLine = inputLine.substring(1);
+                    int seed = Integer.parseInt(inputLine);
+                    client.seed(seed);
+                    return;
+                }
 
             }
         } catch (Exception e) {
