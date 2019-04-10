@@ -115,6 +115,7 @@ public class GameplayScene implements Scene {
 
                 if (paused) {
                     paused = false;
+                    obstacleManager.pauseTime += System.currentTimeMillis() - obstacleManager.pauseStart;
                     break;
                 }
                 //TODO MotionEvent waarden niet helemaal gelijk aan de zichtbare pauze knop, werkt goed genoeg
@@ -122,6 +123,7 @@ public class GameplayScene implements Scene {
                         && mx <= (Constants.SCREEN_WIDTH - Constants.SCREEN_WIDTH / 12) + ((Constants.SCREEN_HEIGHT / 18) / 2)) {
                     if (my >= Constants.SCREEN_WIDTH / 12 - ((Constants.SCREEN_HEIGHT / 18) / 2) && my <= Constants.SCREEN_WIDTH / 12 + ((Constants.SCREEN_HEIGHT / 18) / 2)) {
                         paused = true;
+                        obstacleManager.pauseStart = System.currentTimeMillis();
 
                         break;
                     }
