@@ -16,6 +16,7 @@ public class Client extends Thread {
 
     public Client(GameplayScene gameplayScene) {
         this.gameplayScene = gameplayScene;
+        this.obstacleManager = gameplayScene.getObstacleManager();
         this.start();
     }
 
@@ -23,7 +24,7 @@ public class Client extends Thread {
     public void run() {
         try {
             System.out.println("Connecting");
-            clientSocket = new Socket("145.94.223.22", 8069);
+            clientSocket = new Socket("192.168.1.13", 8069);
             DataSender dataService = new DataSender(this);
             DataReceiver dataReciever = new DataReceiver(this);
 
@@ -45,7 +46,8 @@ public class Client extends Thread {
     }
 
     public void seed(int seed){
-        obstacleManager.getSeed(seed);
+        obstacleManager.populateObstacles(seed);
+        System.out.println(seed);
     }
 
     public Point getPlayer(){
