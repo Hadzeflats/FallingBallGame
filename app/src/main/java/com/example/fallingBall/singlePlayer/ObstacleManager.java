@@ -17,6 +17,8 @@ public class ObstacleManager {
 
     public long startTime;
     public long initTime;
+    public long pauseTime;
+    public long pauseStart;
     public float speed;
     public int elapsedtime;
     public float accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
@@ -41,6 +43,8 @@ public class ObstacleManager {
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.color = color;
+        pauseStart = 0;
+        pauseTime = 0;
 
         startTime = initTime = System.currentTimeMillis();
 
@@ -52,7 +56,7 @@ public class ObstacleManager {
 
     public float Speed(float Speed) {
         speed = Speed;
-        accel = (float) (Math.sqrt(1 + (startTime - initTime) / ((float) Constants.SCREEN_HEIGHT * 7)));
+        accel = (float) (Math.sqrt(1 + (startTime - initTime - pauseTime) / ((float) Constants.SCREEN_HEIGHT * 7)));
         speed = accel * Constants.SCREEN_HEIGHT / ((float) -Constants.SCREEN_HEIGHT * 2);
         return speed;
     }

@@ -1,5 +1,7 @@
 package com.example.fallingBall.client;
 
+import com.example.fallingBall.multiPlayer.Constants;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -19,10 +21,39 @@ public class DataReceiver extends Thread {
             String inputLine = null;
             System.out.println("Reading");
             while ((inputLine = in.readLine()) != null) {
-                String[] locs = inputLine.split(",");
-                int x = Integer.parseInt(locs[1]);
-                int y = Integer.parseInt(locs[2]);
-                client.updatePlayerPoint(x, y, 0);
+//                if (inputLine.startsWith("[INFO]")){
+//                    //TODO maak hub scherm
+
+                if (inputLine.startsWith("$")) {
+                    inputLine = inputLine.substring(1);
+                    int seed = Integer.parseInt(inputLine);
+                    client.seed(seed);
+                    System.out.println("Seed: " + seed);
+                }
+
+                if (inputLine.equals("start")){
+                    client.startGame();
+                    break;
+                }
+            }
+            while ((inputLine = in.readLine()) != null) {
+                if (inputLine.startsWith("&")) {
+                    String[] locs = inputLine.split(",");
+                    int x = (int)((Double.parseDouble(locs[1])* (double) Constants.SCREEN_WIDTH));
+                    int y = (int)((Double.parseDouble(locs[2])* (double) Constants.SCREEN_HEIGHT));
+                    client.updatePlayerPoint(x, y, 0);
+                }
+                if (inputLine.startsWith("@")) {
+                    client.playerDied();
+                    return;
+                }
+
+               /* if (inputLine.startsWith("$")) {
+                    inputLine = inputLine.substring(1);
+                    int seed = Integer.parseInt(inputLine);
+                    client.seed(seed);
+                }*/
+
             }
         } catch (Exception e) {
             e.printStackTrace();
