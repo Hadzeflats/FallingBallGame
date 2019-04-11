@@ -23,7 +23,14 @@ public class DataReceiver extends Thread {
             while ((inputLine = in.readLine()) != null) {
 //                if (inputLine.startsWith("[INFO]")){
 //                    //TODO maak hub scherm
-//                }
+
+                if (inputLine.startsWith("$")) {
+                    inputLine = inputLine.substring(1);
+                    int seed = Integer.parseInt(inputLine);
+                    client.seed(seed);
+                    System.out.println("Seed: " + seed);
+                }
+
                 if (inputLine.equals("start")){
                     client.startGame();
                     break;
@@ -40,12 +47,12 @@ public class DataReceiver extends Thread {
                     client.playerDied();
                     return;
                 }
-                if (inputLine.startsWith("$")) {
+
+               /* if (inputLine.startsWith("$")) {
                     inputLine = inputLine.substring(1);
                     int seed = Integer.parseInt(inputLine);
                     client.seed(seed);
-                    return;
-                }
+                }*/
 
             }
         } catch (Exception e) {

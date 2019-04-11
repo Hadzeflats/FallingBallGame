@@ -16,12 +16,14 @@ public class ObstacleManager {
     private int obstacleHeight;
     private int color;
 
+
     public long startTime;
     public long initTime;
     public double speed;
     public int elapsedtime;
     public double accel = (float) (Math.sqrt(1 + (startTime - initTime) / 50.0));
-    int Seed;
+    private int Seed = -1;
+    private Random generator/* = new Random(Seed)*/;
 
     public int getObstacleGap() {
         return obstacleGap;
@@ -38,35 +40,6 @@ public class ObstacleManager {
         return score;
     }
 
-    public void getSeed (int seed) {
-        Seed = seed;
-    }
-    Random generator = new Random(Seed);
-
-    public double random() {
-        int seed=5;
-        Random generator = new Random(seed);
-            double number = generator.nextDouble();
-            return number;
-    }
-
-/*    public void random() {
-        int seed=5;
-        Random generator = new Random(seed);
-
-        for (int i=0; i<100; i++){
-            int number = generator.nextInt(100);
-            System.out.println(number);
-        }
-
-        generator.setSeed(seed);
-
-        for (int i=0; i<100; i++) {
-            double number = (double) generator.nextInt(100)/100;
-            System.out.println(number);
-        }
-    }*/
-
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
@@ -76,8 +49,6 @@ public class ObstacleManager {
         startTime = initTime = System.currentTimeMillis();
 
         obstacles = new ArrayList<>();
-
-        populateObstacles();
 
     }
 
@@ -99,7 +70,10 @@ public class ObstacleManager {
         return null;
     }
 
-    private void populateObstacles() {
+    public void populateObstacles(int seed) {
+        Seed = seed;
+        generator = new Random(Seed);
+
         int currY = Constants.SCREEN_HEIGHT + 5 * Constants.SCREEN_HEIGHT / 4;
         while (currY > Constants.SCREEN_HEIGHT)
         //while bottom of obstacle < 0 (hasn't gone onto the screen yet), keep generating obstacles. (currY <0) i.p.v. (obstacles.get(obstacles.size() - 1).getRectangle().bottom < 0, dit werkte niet)

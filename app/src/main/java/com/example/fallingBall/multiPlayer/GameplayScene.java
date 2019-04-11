@@ -84,6 +84,9 @@ public class GameplayScene implements Scene {
         gameWin = false;
         Client client = new Client(this);
     }
+    public ObstacleManager getObstacleManager(){
+        return obstacleManager;
+    }
 
 
     @Override
@@ -171,6 +174,8 @@ public class GameplayScene implements Scene {
             drawCenterText(canvas, paint, "Touch to resume");
         }*/
     }
+
+
 
     @Override
     public void update() {
@@ -279,6 +284,7 @@ public class GameplayScene implements Scene {
 
     public void startNewGame(){
         paused = false;
+
     }
 
     public boolean isGameOver() {
