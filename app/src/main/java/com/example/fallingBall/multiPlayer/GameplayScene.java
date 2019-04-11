@@ -18,8 +18,6 @@ public class GameplayScene implements Scene {
     private RectPlayer player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
-    private RectPlayer background;
-    // private int score = obstacleManager.getScore();
 
     private RectPlayer indicator;
     private Point indicatorPoint;
@@ -44,16 +42,13 @@ public class GameplayScene implements Scene {
     private long frameTime;
 
     public GameplayScene() {
-        background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));
         player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 25, Constants.SCREEN_HEIGHT / 25), Color.rgb(230, 0, 100));
         //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
         //When below screen, show indicator
         indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(230, 0, 100));
-        // if (belowScreen)
         indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
-
         indicator2 = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(0, 100, 230));
         indicatorPoint2 = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
@@ -69,6 +64,7 @@ public class GameplayScene implements Scene {
         playerPoint2 = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT + 100);
     }
 
+    //When one player wins, reset game
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
         player.update(playerPoint);
@@ -84,7 +80,8 @@ public class GameplayScene implements Scene {
         gameWin = false;
         Client client = new Client(this);
     }
-    public ObstacleManager getObstacleManager(){
+
+    public ObstacleManager getObstacleManager() {
         return obstacleManager;
     }
 
@@ -124,13 +121,6 @@ public class GameplayScene implements Scene {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.YELLOW);
-        //TODO Change screen when hitting certain score
-
-      /* if (score == 2){
-            canvas.drawColor(Color.GREEN);}*/
-      /*if (score == 2) {
-            background.draw(canvas);
-        }*/
 
         player.draw(canvas);
         obstacleManager.draw(canvas);
@@ -160,21 +150,13 @@ public class GameplayScene implements Scene {
         }
 
 
-        if (paused /*&& System.currentTimeMillis()<100*/){
+        if (paused /*&& System.currentTimeMillis()<100*/) {
             Paint paint = new Paint();
             paint.setTextSize(70);
             paint.setColor(Color.MAGENTA);
             drawCenterText(canvas, paint, "Waiting for player 2");
         }
-
-       /* else if (paused && System.currentTimeMillis()>=100) {
-            Paint paint = new Paint();
-            paint.setTextSize(70);
-            paint.setColor(Color.MAGENTA);
-            drawCenterText(canvas, paint, "Touch to resume");
-        }*/
     }
-
 
 
     @Override
@@ -273,16 +255,15 @@ public class GameplayScene implements Scene {
         }
     }
 
-    public void youWon(){
-        if (!gameLose){
-        gameWin = true;
-        gameLose = false;
-        gameOver = true;
-        // TODO you always win: only if someone wins this happens (so server problem probably)
-    }
+    public void youWon() {
+        if (!gameLose) {
+            gameWin = true;
+            gameLose = false;
+            gameOver = true;
+        }
     }
 
-    public void startNewGame(){
+    public void startNewGame() {
         paused = false;
 
     }
@@ -291,6 +272,7 @@ public class GameplayScene implements Scene {
         return gameOver;
     }
 
+    //draw text in center
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);

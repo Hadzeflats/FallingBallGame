@@ -17,6 +17,7 @@ public class ChooseLevel extends AppCompatActivity {
     public Button button5;
     public Button button6;
     public Button button7;
+    public int diff;
 
     public void init() {
         button4 = findViewById(R.id.button4);
@@ -24,8 +25,10 @@ public class ChooseLevel extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(ChooseLevel.this, SingleGame.class);
-                startActivity(b);
+                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
+                int diff = 1;
+                intent.putExtra("difficulty",diff);
+                startActivity(intent);
             }
         });
 
@@ -33,8 +36,10 @@ public class ChooseLevel extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bb = new Intent(ChooseLevel.this, SingleGame.class);
-                startActivity(bb);
+                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
+                int diff = 2;
+                intent.putExtra("difficulty",diff);
+                startActivity(intent);
             }
         });
         button6 = findViewById(R.id.button6);
@@ -42,9 +47,10 @@ public class ChooseLevel extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(ChooseLevel.this, SingleGame.class);
-                startActivity(b);
-
+                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
+                int diff = 3;
+                intent.putExtra("difficulty",diff);
+                startActivity(intent);
             }
         });
 
@@ -52,8 +58,10 @@ public class ChooseLevel extends AppCompatActivity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bb = new Intent(ChooseLevel.this, SingleGame.class);
-                startActivity(bb);
+                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
+                int diff = 4;
+                intent.putExtra("difficulty",diff);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

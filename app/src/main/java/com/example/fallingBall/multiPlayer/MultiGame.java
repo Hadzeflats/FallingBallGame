@@ -7,10 +7,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class MultiGame extends Activity {
-    //TODO Scherm aan staan terwijl gamen
-    //https://stackoverflow.com/questions/1114270/android-screen-timeout voor meer info
-    /*private static final int DELAY = 3000;
-    int defTimeOut = 0;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +20,5 @@ public class MultiGame extends Activity {
         Constants.SCREEN_HEIGHT = dm.heightPixels;
 
         setContentView(new GamePanel(this));
-        /*defTimeOut = Settings.System.getInt(getContentResolver(),
-                Settings.System.SCREEN_OFF_TIMEOUT, DELAY);
-        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, DELAY);*/
     }
-
-   /* @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, defTimeOut);
-    }*/
-
 }

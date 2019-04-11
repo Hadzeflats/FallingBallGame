@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.example.fallingBall.ChooseLevel;
 import com.example.fallingBall.client.DataReceiver;
 
 import static com.example.fallingBall.singlePlayer.SceneManager.ACTIVE_SCENE;
@@ -17,7 +18,6 @@ public class GameplayScene implements Scene {
     private RectPlayer player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
-    private RectPlayer background;
     // private int score = obstacleManager.getScore();
 
     private RectPlayer indicator;
@@ -42,9 +42,8 @@ public class GameplayScene implements Scene {
 
 
     public GameplayScene() {
-        /*background = new RectPlayer(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Color.rgb(0, 230, 0));*/
         player = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 25, Constants.SCREEN_HEIGHT / 25), Color.rgb(230, 0, 100));
-        //Start in the center of the screen (x-value), start on 3/4 of the screen (y-value)
+        //Start in the center of the screen (x-value), start on 1/3 of the screen (y-value)
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
 
         //pause button
@@ -62,19 +61,22 @@ public class GameplayScene implements Scene {
         indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(230, 0, 100));
         indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
+        //Obstacle values; playerGap (Gap in platform), obstacleGap (Gap between platforms), obstacleHeight (Height of the obstacles), Color
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
 
+        //Tilt controls
         orientationData = new OrientationData();
         orientationData.register();
+
         frameTime = System.currentTimeMillis();
     }
 
+    //Reset after game over
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3);
         player.update(playerPoint);
         indicator.update(indicatorPoint);
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
-        // added just to be safe
         movingPlayer = false;
         paused = false;
     }
@@ -94,7 +96,6 @@ public class GameplayScene implements Scene {
             case MotionEvent.ACTION_DOWN:
                 if (!gameOver && player.getRectangle().contains((int) event.getX(), (int) event.getY()))
                     movingPlayer = true;
-
                 //when tapping screen, if game over and time after game over >= 1 sec, start again
 
                 break;
@@ -222,8 +223,14 @@ public class GameplayScene implements Scene {
                 }
             }
 
-            if (!TouchTop)
-                playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
+            if (!TouchTop) {
+                //TODO refereer naar data van ChooseLevel
+                //if(ChooseLevel.diff = 1) {
+                    playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
+                //} else if (ChooseLevel.diff = 2)
+
+
+            }
 
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
                 //movement y-direction (delta pitch)
@@ -234,7 +241,6 @@ public class GameplayScene implements Scene {
                 //adjust xSpeed for sensitivity of tilt controls
                 //TODO add sensitivity option
                 float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 700f;
-                float ySpeed = pitch * Constants.SCREEN_HEIGHT / 500f;
 
                 // If number of pixels player is moving > 5, return xSpeed*elapsedTime, otherwise add 0.
                 playerPoint.x += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
@@ -257,6 +263,7 @@ public class GameplayScene implements Scene {
         }
     }
 
+    //draw text in center
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
