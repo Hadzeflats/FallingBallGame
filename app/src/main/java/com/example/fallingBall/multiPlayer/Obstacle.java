@@ -14,7 +14,7 @@ public class Obstacle implements GameObject {
 
     public Rect getRectangle2() {
         return rectangle2;
-    }
+    } //TODO
 
     public void incrementY (double y){
         rectangle.top += y;
