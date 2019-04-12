@@ -224,10 +224,8 @@ public class GameplayScene implements Scene {
             }
 
             if (!TouchTop) {
-                //TODO refereer naar data van ChooseLevel
-                //if(ChooseLevel.diff = 1) {
+                //TODO refereer naar data bundle van ChooseLevel
                     playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
-                //} else if (ChooseLevel.diff = 2)
 
 
             }
