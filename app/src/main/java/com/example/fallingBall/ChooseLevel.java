@@ -17,7 +17,6 @@ public class ChooseLevel extends AppCompatActivity {
     public Button button5;
     public Button button6;
     public Button button7;
-    public int diff;
 
     public void init() {
         button4 = findViewById(R.id.button4);
