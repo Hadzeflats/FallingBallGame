@@ -1,9 +1,13 @@
 package com.example.fallingBall.singlePlayer;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
+
+import com.example.fallingBall.ChooseLevel;
 
 import java.util.ArrayList;
 
@@ -34,7 +38,6 @@ public class ObstacleManager {
     private int score = 0;
 
     public int getScore() {
-        System.out.println(score);
         return score;
     }
 
@@ -55,7 +58,11 @@ public class ObstacleManager {
     }
 
     public float Speed(float Speed) {
+        //TODO
+        //Bundle bundle = getIntent().getExtras();
         speed = Speed;
+
+
         accel = (float) (Math.sqrt(1 + (startTime - initTime - pauseTime) / ((float) Constants.SCREEN_HEIGHT * 7)));
         speed = accel * Constants.SCREEN_HEIGHT / ((float) -Constants.SCREEN_HEIGHT * 2);
         return speed;

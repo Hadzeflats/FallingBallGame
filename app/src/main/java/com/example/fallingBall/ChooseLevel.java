@@ -19,14 +19,14 @@ public class ChooseLevel extends AppCompatActivity {
     public Button button7;
 
     public void init() {
+
+        final Intent intent = new Intent(ChooseLevel.this,SingleGame.class);
         button4 = findViewById(R.id.button4);
         button4.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
-                int diff = 1;
-                intent.putExtra("difficulty",diff);
+                intent.putExtra("diff1",1);
                 startActivity(intent);
             }
         });
@@ -35,9 +35,7 @@ public class ChooseLevel extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
-                int diff = 2;
-                intent.putExtra("difficulty",diff);
+                intent.putExtra("diff2",2);
                 startActivity(intent);
             }
         });
@@ -46,9 +44,7 @@ public class ChooseLevel extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
-                int diff = 3;
-                intent.putExtra("difficulty",diff);
+                intent.putExtra("diff3",3);
                 startActivity(intent);
             }
         });
@@ -57,9 +53,7 @@ public class ChooseLevel extends AppCompatActivity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseLevel.this, SingleGame.class);
-                int diff = 4;
-                intent.putExtra("difficulty",diff);
+                intent.putExtra("diff4",4);
                 startActivity(intent);
             }
         });
