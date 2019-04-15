@@ -1,4 +1,4 @@
-package com.example.fallingBall;
+package com.example.fallingBall.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 
-import com.example.fallingBall.singlePlayer.Constants;
-import com.example.fallingBall.singlePlayer.GameplayScene;
+import com.example.fallingBall.R;
 import com.example.fallingBall.singlePlayer.SingleGame;
 
 public class ChooseLevel extends AppCompatActivity {

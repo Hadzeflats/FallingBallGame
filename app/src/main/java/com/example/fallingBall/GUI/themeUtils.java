@@ -1,7 +1,9 @@
-package com.example.fallingBall;
+package com.example.fallingBall.GUI;
 
 import android.app.Activity;
 import android.content.Intent;
+
+import com.example.fallingBall.R;
 
 public class themeUtils {
 

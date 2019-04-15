@@ -1,13 +1,9 @@
 package com.example.fallingBall.singlePlayer;
 
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Bundle;
-
-import com.example.fallingBall.ChooseLevel;
 
 import java.util.ArrayList;
 
