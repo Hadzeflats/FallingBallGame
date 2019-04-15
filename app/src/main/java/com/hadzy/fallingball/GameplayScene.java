@@ -136,7 +136,7 @@ public class GameplayScene implements Scene {
             Rect colRect = obstacleManager.playerCollide(player);
             if (colRect != null) {
 
-                float Th = obstacleManager.accel * 1;
+                float Th = obstacleManager.accel * 55;
                 Rect play = player.getRectangle();
 
                 if (colRect.top + Th < play.bottom) {
