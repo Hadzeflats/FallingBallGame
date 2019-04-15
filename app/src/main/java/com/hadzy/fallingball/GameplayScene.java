@@ -87,7 +87,7 @@ public class GameplayScene implements Scene {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.YELLOW);
+        canvas.drawColor(Color.rgb(255, 150, 255));
         //TODO Change screen when hitting certain score
         /*score++;
         if (score == 20){
@@ -136,7 +136,7 @@ public class GameplayScene implements Scene {
             Rect colRect = obstacleManager.playerCollide(player);
             if (colRect != null) {
 
-                float Th = obstacleManager.accel * 55;
+                float Th = obstacleManager.accel * 16;
                 Rect play = player.getRectangle();
 
                 if (colRect.top + Th < play.bottom) {
@@ -155,7 +155,7 @@ public class GameplayScene implements Scene {
                     TouchSide = false;
                 }
             } else
-                playerPoint.y += 18 * (obstacleManager.accel * 7 / 10);
+                playerPoint.y += 22 * (obstacleManager.accel * 7 / 10);
 
             if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null && !TouchSide) {
                 //movement y-direction (delta pitch)
