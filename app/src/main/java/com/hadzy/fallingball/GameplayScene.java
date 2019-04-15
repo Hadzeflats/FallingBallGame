@@ -136,7 +136,7 @@ public class GameplayScene implements Scene {
                 //TODO
             }
             else
-                playerPoint.y += 10;
+                playerPoint.y += 16;
 
         }
     }
