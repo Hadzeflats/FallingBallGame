@@ -5,11 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.view.MotionEvent;
-
-import com.example.fallingBall.ChooseLevel;
-import com.example.fallingBall.client.DataReceiver;
 
 import static com.example.fallingBall.singlePlayer.SceneManager.ACTIVE_SCENE;
 
