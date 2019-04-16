@@ -180,6 +180,8 @@ public class GameplayScene implements Scene {
         boolean TouchSide = false;
         boolean TouchTop = false;
         MultiGameStart();
+        player2.update(playerPoint2);
+        indicator2.update(indicatorPoint2);
 
         if (!gameOver && !paused) {
             if (frameTime < Constants.INIT_TIME)
@@ -200,11 +202,11 @@ public class GameplayScene implements Scene {
             // updates the location of player to playerPoint
             player.update(playerPoint);
             //multi
-            player2.update(playerPoint2);
+
 
             obstacleManager.update();
             indicator.update(indicatorPoint);
-            indicator2.update(indicatorPoint2);
+      ;
 
             //collision (+y movement)
             Rect colRect = obstacleManager.playerCollide(player);

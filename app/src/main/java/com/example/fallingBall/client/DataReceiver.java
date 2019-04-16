@@ -19,10 +19,12 @@ public class DataReceiver extends Thread {
             String inputLine = null;
             System.out.println("Reading");
             while ((inputLine = in.readLine()) != null) {
-                String[] locs = inputLine.split(",");
-                int x = Integer.parseInt(locs[1]);
-                int y = Integer.parseInt(locs[2]);
-                client.updatePlayerPoint(x, y, 0);
+                if (inputLine.startsWith("&")){
+                    String[] locs = inputLine.split(",");
+                    int x = Integer.parseInt(locs[1]);
+                    int y = Integer.parseInt(locs[2]);
+                    client.updatePlayerPoint(x, y, 0);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
