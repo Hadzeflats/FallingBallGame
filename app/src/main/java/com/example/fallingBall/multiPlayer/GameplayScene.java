@@ -122,7 +122,7 @@ public class GameplayScene implements Scene {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.YELLOW);
+        canvas.drawColor(Color.GREEN);
         //TODO Change screen when hitting certain score
 
       /* if (score == 2){
