@@ -15,9 +15,9 @@ public class SingleGame extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        ObstacleManager obstacleManager;
 
-        //TODO
+        //TODO send data for level difficulty selection
+        ObstacleManager obstacleManager;
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
             return;

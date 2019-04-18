@@ -56,7 +56,7 @@ public class GameplayScene implements Scene {
 
         //When below screen, show indicator, if (belowScreen)
         indicator = new RectPlayer(new Rect(0, 0, Constants.SCREEN_HEIGHT / 50, Constants.SCREEN_HEIGHT / 50), Color.rgb(230, 0, 100));
-        indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60); //TODO playerPoint.x, moet het niet playerPoint2.x zijn?
+        indicatorPoint = new Point(playerPoint.x, Constants.SCREEN_HEIGHT - 60);
 
         //Obstacle values; playerGap (Gap in platform), obstacleGap (Gap between platforms), obstacleHeight (Height of the obstacles), Color
         obstacleManager = new ObstacleManager(Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_HEIGHT / 7, Constants.SCREEN_HEIGHT / 30, Color.BLACK);
@@ -221,7 +221,6 @@ public class GameplayScene implements Scene {
             }
 
             if (!TouchTop) {
-                //TODO refereer naar data bundle van ChooseLevel
                     playerPoint.y += 18 * (obstacleManager.accel * 6 / 10);
 
 
