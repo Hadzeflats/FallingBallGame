@@ -39,6 +39,7 @@ public class ChoosePlayer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        themeUtils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_choose_player);
         init();
 

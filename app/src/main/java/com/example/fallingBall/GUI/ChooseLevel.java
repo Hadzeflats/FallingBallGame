@@ -63,6 +63,7 @@ public class ChooseLevel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        themeUtils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_choose_level);
         init();
     }

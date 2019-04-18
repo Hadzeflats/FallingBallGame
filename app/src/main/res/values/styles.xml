@@ -9,9 +9,9 @@
     </style>
 
     <style name="FirstTheme">
-        <item name="colorPrimary">#000000</item>
-        <item name="colorPrimaryDark">#424242</item>
-        <item name="colorAccent">#4d8791</item>
+        <item name="colorPrimary">#D81B60</item>
+        <item name="colorPrimaryDark">#b2104b</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
     </style>
 

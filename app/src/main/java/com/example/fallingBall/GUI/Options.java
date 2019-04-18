@@ -29,7 +29,7 @@ public class Options extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.button12:
-                themeUtils.changeToTheme(this,themeUtils.BLACK);
+                themeUtils.changeToTheme(this,themeUtils.PINK);
                 break;
             case R.id.button11:
                 themeUtils.changeToTheme(this,themeUtils.BLUE);
